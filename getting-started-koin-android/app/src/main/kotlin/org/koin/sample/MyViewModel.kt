@@ -1,4 +1,4 @@
-package org.koin.sample.view.viewmodel
+package org.koin.sample
 
 import androidx.lifecycle.ViewModel
 import org.koin.sample.HelloRepository

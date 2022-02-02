@@ -1,11 +1,9 @@
-package org.koin.sample.view.simple
-
-import org.koin.sample.HelloRepository
+package org.koin.sample
 
 /**
  * Simple presenter - use the HelloRepository to "say" hello
  */
-class MySimplePresenter(val repo: HelloRepository) {
+class MyPresenter(val repo: HelloRepository) {
 
 
     fun sayHello() = "${repo.giveHello()} from MySimplePresenter"
