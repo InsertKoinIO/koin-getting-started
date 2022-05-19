@@ -5,6 +5,5 @@ package org.koin.sample
  */
 class MyPresenter(val repo: HelloRepository) {
 
-
     fun sayHello() = "${repo.giveHello()} from MySimplePresenter"
 }

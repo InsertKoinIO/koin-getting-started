@@ -7,7 +7,7 @@ title: Android ViewModel
 ## Get the code
 
 :::info
-[The source code is available at on Github](https://github.com/InsertKoinIO/koin-getting-started/tree/main/quickstart/getting-started-koin-android)
+[The source code is available at on Github](https://github.com/InsertKoinIO/koin-getting-started/tree/main/getting-started-koin-android)
 :::
 
 ## Gradle Setup
@@ -22,6 +22,10 @@ repositories {
 dependencies {
     // Koin for Android
     implementation "io.insert-koin:koin-android:$koin_version"
+
+    // Koin Test
+    testImplementation "io.insert-koin:koin-test:$koin_version"
+    testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
 }
 ```
 
@@ -50,7 +54,9 @@ class MyViewModel(val repo : HelloRepository) : ViewModel() {
 
 ## Writing the Koin module
 
-Use the `module` function to declare a module. Let's declare our first component:
+Use the `module` function to declare a module. Let's declare our first component. 
+
+Classical DSL way:
 
 ```kotlin
 val appModule = module {
@@ -62,6 +68,20 @@ val appModule = module {
     viewModel { MyViewModel(get()) }
 }
 ```
+
+Constructor DSL way:
+
+```kotlin
+val appModule = module {
+
+    // single instance of HelloRepository
+    singleOf(::HelloRepositoryImpl) { bind<HelloRepository>() }
+
+    // MyViewModel ViewModel
+    viewModelOf(::MyViewModel)
+}
+```
+
 :::info
 we declare our MyViewModel class as a `viewModel` in a `module`. Koin will give a `MyViewModel` to the lifecycle ViewModelFactory and help bind it to the current component.
 :::
@@ -108,3 +128,28 @@ class MyViewModelActivity : AppCompatActivity() {
 
 > The `getViewModel()` function is here to retrieve directly an instance (non lazy)
 :::
+
+## Verifying your graph
+
+We can ensure that our Koin configuration is good before launching our app, by verifying our Koin configuration with a simple JUnit Test.
+
+You need to declare a `MockProviderRule` to declare how you mock a class (here for example, we use Mockito). 
+
+The `checkModules` function allow to verify the given Koin modules:
+
+```kotlin
+class CheckModulesTest : KoinTest {
+
+    // Declare Mock with Mockito
+    @get:Rule
+    val mockProvider = MockProviderRule.create { clazz ->
+        Mockito.mock(clazz.java)
+    }
+
+    // verify the Koin configuration
+    @Test
+    fun checkAllModules() = checkModules {
+        modules(appModule)
+    }
+}
+```

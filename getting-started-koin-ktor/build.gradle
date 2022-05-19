@@ -1,9 +1,9 @@
 
 buildscript {
     ext {
-        kotlin_version = "1.5.32"
-        koin_version = "3.1.5"
-        ktor_version = "1.6.5"
+        kotlin_version = "1.6.21"
+        koin_version = "3.2.0"
+        ktor_version = "2.0.1"
     }
     repositories {
         mavenLocal()
@@ -32,7 +32,7 @@ dependencies {
     testImplementation "io.ktor:ktor-server-test-host:$ktor_version"
 
     // Logging
-    implementation "ch.qos.logback:logback-classic:1.2.10"
+    implementation "ch.qos.logback:logback-classic:1.2.11"
 }
 
 repositories {

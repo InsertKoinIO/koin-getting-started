@@ -1,10 +1,10 @@
 package org.koin.sample
 
-import org.koin.dsl.bind
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
-import org.koin.dsl.single
 
-val helloAppModule = module(createdAtStart = true) {
-    single<HelloServiceImpl>() bind HelloService::class
-    single<HelloRepository>()
+val helloAppModule = module {
+    singleOf(::HelloServiceImpl) { bind<HelloService>() }
+    singleOf(::HelloRepository)
 }

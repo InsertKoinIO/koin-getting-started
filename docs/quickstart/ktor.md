@@ -19,7 +19,7 @@ Let's go 🚀
 ## Get the code
 
 :::info
-[The source code is available at on Github](https://github.com/InsertKoinIO/koin-getting-started/tree/main/quickstart/getting-started-koin-ktor)
+[The source code is available at on Github](https://github.com/InsertKoinIO/koin-getting-started/tree/main/getting-started-koin-ktor)
 :::
 
 ## Gradle Setup
@@ -65,9 +65,6 @@ Finally, we need an HTTP Controller to create the HTTP Route. In Ktor is will be
 
 ```kotlin
 fun Application.main() {
-    // Install Ktor features
-    install(DefaultHeaders)
-    install(CallLogging)
 
     // Lazy inject HelloService
     val service: HelloService by inject()
@@ -105,8 +102,8 @@ Let's assemble our components with a Koin module:
 
 ```kotlin
 val helloAppModule = module {
-    single<HelloService> { HelloServiceImpl(get()) } // get() Will resolve HelloRepository
-    single { HelloRepository() }
+    singleOf(::HelloServiceImpl) { bind<HelloService>() }
+    singleOf(::HelloRepository)
 }
 ```
 
@@ -116,10 +113,8 @@ Finally, let's start Koin from Ktor:
 
 ```kotlin
 fun Application.main() {
-    // Install Ktor features
-    install(DefaultHeaders)
-    install(CallLogging)
-    // Declare Koin
+
+    // Install Koin
     install(Koin) {
         SLF4JLogger()
         modules(helloAppModule)
@@ -142,7 +137,7 @@ Let's start Ktor:
 ```kotlin
 fun main(args: Array<String>) {
     // Start Ktor
-    embeddedServer(Netty, commandLineEnvironment(args)).start()
+    embeddedServer(Netty, commandLineEnvironment(args)).start(wait = true)
 }
 ```
 

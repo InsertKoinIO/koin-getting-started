@@ -7,7 +7,7 @@ title: Kotlin
 ## Get the code
 
 :::info
-[The source code is available at on Github](https://github.com/InsertKoinIO/koin-getting-started/tree/main/quickstart/getting-started-koin-core)
+[The source code is available at on Github](https://github.com/InsertKoinIO/koin-getting-started/tree/main/getting-started-koin-core)
 :::
 
 ## Setup
@@ -31,7 +31,7 @@ dependencies {
 
 In our small app we need to have 2 components:
 
-* HelloMessageData - hold data
+* HelloMessageData - hold message data
 * HelloService - use and display data from HelloMessageData
 * HelloApplication - retrieve and use HelloService
 
@@ -43,7 +43,10 @@ Let's create a `HelloMessageData` data class to hold our data:
 /**
  * A class to hold our message data
  */
-data class HelloMessageData(val message : String = "Hello Koin!")
+
+class HelloMessageData {
+    val message: String = "Hello Koin!"
+}
 ```
 
 ### Service
@@ -91,7 +94,9 @@ class HelloApplication : KoinComponent {
 
 ## Declaring dependencies
 
-Now, let's assemble `HelloMessageData` with `HelloService`, with a Koin module:
+Now, let's assemble `HelloMessageData` with `HelloService`, with a Koin module.
+
+Classical DSL way:
 
 ```kotlin
 val helloModule = module {
@@ -106,6 +111,21 @@ We declare each component as `single`, as singleton instances.
 
 * `single { HelloMessageData() }` : declare a singleton of `HelloMessageData` instance
 * `single { HelloServiceImpl(get()) as HelloService }` : Build `HelloServiceImpl` with injected instance of `HelloMessageData`,  declared a singleton of `HelloService`.
+
+
+or Constructor DSL way:
+
+```kotlin
+val helloModule = module {
+
+    singleOf(::HelloMessageData)
+
+    singleOf(::HelloServiceImpl) { bind<HelloService>() }
+}
+```
+
+* `singleOf(::HelloMessageData)` : declare a singleton of `HelloMessageData` instance
+* `singleOf(::HelloServiceImpl) { bind<HelloService>() }` : Build `HelloServiceImpl` with injected instance of `HelloMessageData`,  declared a singleton of `HelloService`
 
 ## That's it!
 

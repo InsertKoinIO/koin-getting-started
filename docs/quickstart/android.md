@@ -7,7 +7,7 @@ title: Android
 ## Get the code
 
 :::info
-[The source code is available at on Github](https://github.com/InsertKoinIO/koin-getting-started/tree/main/quickstart/getting-started-koin-android)
+[The source code is available at on Github](https://github.com/InsertKoinIO/koin-getting-started/tree/main/getting-started-koin-android)
 :::
 
 ## Gradle Setup
@@ -22,6 +22,10 @@ repositories {
 dependencies {
     // Koin for Android
     implementation "io.insert-koin:koin-android:$koin_version"
+
+    // Koin Test
+    testImplementation "io.insert-koin:koin-test:$koin_version"
+    testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
 }
 ```
 
@@ -50,7 +54,9 @@ class MySimplePresenter(val repo: HelloRepository) {
 
 ## Writing the Koin module
 
-Use the `module` function to declare a module. Let's declare our first component:
+Use the `module` function to declare a module. Let's declare our first component. 
+
+Classical DSL way:
 
 ```kotlin
 val appModule = module {
@@ -60,6 +66,19 @@ val appModule = module {
 
     // Simple Presenter Factory
     factory { MySimplePresenter(get()) }
+}
+```
+
+Constructor DSL way:
+
+```kotlin
+val appModule = module {
+
+    // single instance of HelloRepository
+    singleOf(::HelloRepositoryImpl) { bind<HelloRepository>() }
+
+    // Simple Presenter Factory
+    factoryOf(::MyPresenter)
 }
 ```
 
@@ -108,3 +127,28 @@ The `by inject()` function allows us to retrieve Koin instances, in Android comp
 :::info
 The `get()` function is here to retrieve directly an instance (non lazy)
 :::
+
+## Verifying your graph
+
+We can ensure that our Koin configuration is good before launching our app, by verifying our Koin configuration with a simple JUnit Test.
+
+You need to declare a `MockProviderRule` to declare how you mock a class (here for example, we use Mockito). 
+
+The `checkModules` function allow to verify the given Koin modules:
+
+```kotlin
+class CheckModulesTest : KoinTest {
+
+    // Declare Mock with Mockito
+    @get:Rule
+    val mockProvider = MockProviderRule.create { clazz ->
+        Mockito.mock(clazz.java)
+    }
+
+    // verify the Koin configuration
+    @Test
+    fun checkAllModules() = checkModules {
+        modules(appModule)
+    }
+}
+``

@@ -1,16 +1,17 @@
 package org.koin.sample
 
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
-// Koin module
+// Constructor DSL
 val helloModule = module {
-    single { HelloMessageData() }
-    single<HelloService> { HelloServiceImpl(get()) }
+    singleOf(::HelloMessageData)
+    singleOf(::HelloServiceImpl) { bind<HelloService>() }
 }
 
-/*
-val helloModule = module {
-    single<HelloMessageData>()
-    single<HelloServiceImpl>() bind HelloService::class
-}
- */
+// Classic DSL
+//val helloModule = module {
+//    single { HelloMessageData() }
+//    single<HelloService> { HelloServiceImpl(get()) }
+//}
