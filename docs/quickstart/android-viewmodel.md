@@ -1,5 +1,5 @@
 ---
-title: Android ViewModel
+title: Android - ViewModel
 ---
 
 > This tutorial lets you write an Android/Kotlin application and use Koin inject and retrieve your ViewModel components.
