@@ -2,7 +2,8 @@
 title: Android - ViewModel
 ---
 
-> This tutorial lets you write an Android/Kotlin application and use Koin inject and retrieve your ViewModel components.
+> This tutorial lets you write an Android application and use Koin dependency injection to retrieve your components.
+> You need around __10/15 min__ to do the tutorial.
 
 ## Get the code
 
@@ -19,121 +20,160 @@ Add the Koin Android dependency like below:
 repositories {
 	mavenCentral()    
 }
+
 dependencies {
     // Koin for Android
     implementation "io.insert-koin:koin-android:$koin_version"
 
     // Koin Test
-    testImplementation "io.insert-koin:koin-test:$koin_version"
     testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
 }
 ```
 
-## Our components
+## Application Overview
 
-Let's create a HelloRepository to provide some data:
+The idea of the application is to manage a list of users, and display it in our `MainActivity` class with a Presenter or a ViewModel:
+
+> Users -> UserRepository -> (Presenter or ViewModel) -> MainActivity
+
+## The "User" Data
+
+We will manage a collection of Users. Here is the data class: 
 
 ```kotlin
-interface HelloRepository {
-    fun giveHello(): String
+data class User(val name : String)
+```
+
+We create a "Repository" component to manage the list of users (add users or find one by name). Here below, the `UserRepository` interface and its implementation:
+
+```kotlin
+interface UserRepository {
+    fun findUser(name : String): User?
+    fun addUsers(users : List<User>)
 }
 
-class HelloRepositoryImpl() : HelloRepository {
-    override fun giveHello() = "Hello Koin"
+class UserRepositoryImpl : UserRepository {
+
+    private val _users = arrayListOf<User>()
+
+    override fun findUser(name: String): User? {
+        return _users.firstOrNull { it.name == name }
+    }
+
+    override fun addUsers(users : List<User>) {
+        _users.addAll(users)
+    }
 }
 ```
 
-Let's create a ViewModel class, for consuming this data:
+## The Koin module
 
-```kotlin
-class MyViewModel(val repo : HelloRepository) : ViewModel() {
-
-    fun sayHello() = "${repo.giveHello()} from $this"
-}
-```
-
-## Writing the Koin module
-
-Use the `module` function to declare a module. Let's declare our first component. 
-
-Classical DSL way:
-
-```kotlin
-val appModule = module {
-
-    // single instance of HelloRepository
-    single<HelloRepository> { HelloRepositoryImpl() }
-
-    // MyViewModel ViewModel
-    viewModel { MyViewModel(get()) }
-}
-```
-
-Constructor DSL way:
+Use the `module` function to declare a Koin module. A Koin module is the place where we define all our components to be injected.
 
 ```kotlin
 val appModule = module {
-
-    // single instance of HelloRepository
-    singleOf(::HelloRepositoryImpl) { bind<HelloRepository>() }
-
-    // MyViewModel ViewModel
-    viewModelOf(::MyViewModel)
+    
 }
 ```
+
+Let's declare our first component. We want a singleton of `UserRepository`, by creating an instance of `UserRepositoryImpl`
+
+```kotlin
+val appModule = module {
+    single<UserRepository> { UserRepositoryImpl() }
+}
+```
+
+## Displaying User with ViewModel
+
+Let's write a ViewModel component to display a user:
+
+```kotlin
+class UserViewModel(private val repository: UserRepository) : ViewModel() {
+
+    fun sayHello(name : String) : String{
+        val foundUser = repository.findUser(name)
+        return foundUser?.let { "Hello '$it' from $this" } ?: "User '$name' not found!"
+    }
+}
+```
+
+> UserRepository is referenced in UserViewModel`s constructor
+
+We declare `UserViewModel` in our Koin module. We declare it as a `factory` definition, to not keep any instance in memory (avoid any leak with Android lifecycle):
+
+```kotlin
+val appModule = module {
+     single<UserRepository> { UserRepositoryImpl() }
+     viewModel { MyViewModel(get()) }
+}
+```
+
+## Injecting ViewModel in Android
+
+The `UserViewModel` component will be created, resolving the `UserRepository` instance with it. To get it into our Activity, let's inject it with the `by viewModel()` delegate function: 
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+
+    private val viewModel: UserViewModel by viewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        
+        //...
+    }
+}
+```
+
+That's it, your app is ready.
 
 :::info
-we declare our MyViewModel class as a `viewModel` in a `module`. Koin will give a `MyViewModel` to the lifecycle ViewModelFactory and help bind it to the current component.
+The `by viewModel()` function allows us to retrieve a ViewModel instances, create the associated ViewModel Factory for you and bind it to the lifecycle
 :::
 
 ## Start Koin
 
-Now that we have a module, let's start it with Koin. Open your application class, or make one (don't forget to declare it in your manifest.xml). Just call the `startKoin()` function:
+We need to start Koin with our Android application. Just call the `startKoin()` function in the application's main entry point, our `MainApplication` class:
 
 ```kotlin
-class MyApplication : Application(){
+class MainApplication : Application(){
     override fun onCreate() {
         super.onCreate()
-        // Start Koin
+        
         startKoin{
             androidLogger()
-            androidContext(this@MyApplication)
+            androidContext(this@MainApplication)
             modules(appModule)
         }
     }
 }
 ```
 
-## Injecting dependencies
 
-The `MyViewModel` component will be created with `HelloRepository` instance. To get it into our Activity, let's inject it with the `by viewModel()` delegate injector: 
+## Koin module: classic or constructor DSL?
+
+Here is the Koin moduel declaration for our app:
 
 ```kotlin
-class MyViewModelActivity : AppCompatActivity() {
-    
-    // Lazy Inject ViewModel
-    val myViewModel: MyViewModel by viewModel()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_simple)
-
-        //...
-    }
+val appModule = module {
+    single<HelloRepository> { HelloRepositoryImpl() }
+    viewModel { MyViewModel(get()) }
 }
 ```
 
-:::info
->The `by viewModel()` function allows us to retrieve a ViewModel instance from Koin, linked to the Android ViewModelFactory.
+We can write it in a more compact way, by using constructors:
 
-> The `getViewModel()` function is here to retrieve directly an instance (non lazy)
-:::
+```kotlin
+val appModule = module {
+    singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
+    viewModelOf(::UserViewModel)
+}
+```
 
-## Verifying your graph
+## Verifying your App!
 
 We can ensure that our Koin configuration is good before launching our app, by verifying our Koin configuration with a simple JUnit Test.
-
-You need to declare a `MockProviderRule` to declare how you mock a class (here for example, we use Mockito). 
 
 The `checkModules` function allow to verify the given Koin modules:
 
@@ -153,3 +193,9 @@ class CheckModulesTest : KoinTest {
     }
 }
 ```
+
+With just a JUnit test, you can ensure your definitions configuration are not missing anything!
+
+:::info
+You need to declare a `MockProviderRule` to declare how you mock a class (here for example, we use Mockito). 
+:::

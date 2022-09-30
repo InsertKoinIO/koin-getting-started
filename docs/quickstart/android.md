@@ -2,7 +2,8 @@
 title: Android
 ---
 
-> This tutorial lets you write an Android/Kotlin application and use Koin inject and retrieve your components.
+> This tutorial lets you write an Android application and use Koin dependency injection to retrieve your components.
+> You need around __10/15 min__ to do the tutorial.
 
 ## Get the code
 
@@ -19,98 +20,169 @@ Add the Koin Android dependency like below:
 repositories {
 	mavenCentral()    
 }
+
 dependencies {
     // Koin for Android
     implementation "io.insert-koin:koin-android:$koin_version"
 
     // Koin Test
-    testImplementation "io.insert-koin:koin-test:$koin_version"
     testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
 }
 ```
 
-## Our components
+## Application Overview
 
-Let's create a HelloRepository to provide some data:
+The idea of the application is to manage a list of users, and display it in our `MainActivity` class with a Presenter or a ViewModel:
+
+> Users -> UserRepository -> (Presenter or ViewModel) -> MainActivity
+
+## The "User" Data
+
+We will manage a collection of Users. Here is the data class: 
 
 ```kotlin
-interface HelloRepository {
-    fun giveHello(): String
+data class User(val name : String)
+```
+
+We create a "Repository" component to manage the list of users (add users or find one by name). Here below, the `UserRepository` interface and its implementation:
+
+```kotlin
+interface UserRepository {
+    fun findUser(name : String): User?
+    fun addUsers(users : List<User>)
 }
 
-class HelloRepositoryImpl() : HelloRepository {
-    override fun giveHello() = "Hello Koin"
+class UserRepositoryImpl : UserRepository {
+
+    private val _users = arrayListOf<User>()
+
+    override fun findUser(name: String): User? {
+        return _users.firstOrNull { it.name == name }
+    }
+
+    override fun addUsers(users : List<User>) {
+        _users.addAll(users)
+    }
 }
 ```
 
-Let's create a presenter class, for consuming this data:
+## The Koin module
 
-```kotlin
-class MySimplePresenter(val repo: HelloRepository) {
-
-    fun sayHello() = "${repo.giveHello()} from $this"
-}
-```
-
-## Writing the Koin module
-
-Use the `module` function to declare a module. Let's declare our first component. 
-
-Classical DSL way:
-
-```kotlin
-val appModule = module {
-
-    // single instance of HelloRepository
-    single<HelloRepository> { HelloRepositoryImpl() }
-
-    // Simple Presenter Factory
-    factory { MySimplePresenter(get()) }
-}
-```
-
-Constructor DSL way:
+Use the `module` function to declare a Koin module. A Koin module is the place where we define all our components to be injected.
 
 ```kotlin
 val appModule = module {
-
-    // single instance of HelloRepository
-    singleOf(::HelloRepositoryImpl) { bind<HelloRepository>() }
-
-    // Simple Presenter Factory
-    factoryOf(::MyPresenter)
+    
 }
 ```
 
-We declare our MySimplePresenter class as `factory` to have a new instance created each time our Activity need one.
+Let's declare our first component. We want a singleton of `UserRepository`, by creating an instance of `UserRepositoryImpl`
+
+```kotlin
+val appModule = module {
+    single<UserRepository> { UserRepositoryImpl() }
+}
+```
+
+## Displaying User with Presenter
+
+Let's write a presenter (like in MVP architecture), to display a user:
+
+```kotlin
+class UserPresenter(private val repository: UserRepository) {
+
+    fun sayHello(name : String) : String{
+        val foundUser = repository.findUser(name)
+        return foundUser?.let { "Hello '$it' from $this" } ?: "User '$name' not found!"
+    }
+}
+```
+
+> UserRepository is referenced in UserPresenter`s constructor
+
+We declare `UserPresenter` in our Koin module. We declare it as a `factory` definition, to not keep any instance in memory (avoid any leak with Android lifecycle):
+
+```kotlin
+val appModule = module {
+     single<UserRepository> { UserRepositoryImpl() }
+     factory { MyPresenter(get()) }
+}
+```
+
+## Injecting Dependencies in Android
+
+The `UserPresenter` component will be created, resolving the `UserRepository` instance with it. To get it into our Activity, let's inject it with the `by inject()` delegate function: 
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+
+    private val presenter: UserPresenter by inject()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        
+        //...
+    }
+}
+```
+
+That's it, your app is ready.
+
+:::info
+The `by inject()` function allows us to retrieve Koin instances, in Android components runtime (Activity, fragment, Service...)
+:::
 
 ## Start Koin
 
-Now that we have a module, let's start it with Koin. Open your application class, or make one (don't forget to declare it in your manifest.xml). Just call the `startKoin()` function:
+We need to start Koin with our Android application. Just call the `startKoin()` function in the application's main entry point, our `MainApplication` class:
 
 ```kotlin
-class MyApplication : Application(){
+class MainApplication : Application(){
     override fun onCreate() {
         super.onCreate()
-        // Start Koin
+        
         startKoin{
             androidLogger()
-            androidContext(this@MyApplication)
+            androidContext(this@MainApplication)
             modules(appModule)
         }
     }
 }
 ```
 
-## Injecting dependencies
+## Displaying User with ViewModel
 
-The `MySimplePresenter` component will be created with `HelloRepository` instance. To get it into our Activity, let's inject it with the `by inject()` delegate injector: 
+Let's write a presenter (like in MVP architecture), to display a user:
 
 ```kotlin
-class MySimpleActivity : AppCompatActivity() {
+class UserViewModel(private val repository: UserRepository) : ViewModel() {
 
-    // Lazy injected MySimplePresenter
-    val firstPresenter: MySimplePresenter by inject()
+    fun sayHello(name : String) : String{
+        val foundUser = repository.findUser(name)
+        return foundUser?.let { "Hello '$it' from $this" } ?: "User '$name' not found!"
+    }
+}
+```
+
+> UserRepository is referenced in UserViewModel`s constructor
+
+We declare `UserViewModel` in our Koin module. We declare it as a `factory` definition, to not keep any instance in memory (avoid any leak with Android lifecycle):
+
+```kotlin
+val appModule = module {
+     single<UserRepository> { UserRepositoryImpl() }
+     viewModel { MyViewModel(get()) }
+}
+```
+
+## Injecting ViewModel in Android
+
+The `UserViewModel` component will be created, resolving the `UserRepository` instance with it. To get it into our Activity, let's inject it with the `by viewModel()` delegate function: 
+
+```kotlin
+class MainActivity : AppCompatActivity() {
+
+    private val viewModel: UserViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,18 +193,34 @@ class MySimpleActivity : AppCompatActivity() {
 ```
 
 :::info
-The `by inject()` function allows us to retrieve Koin instances, in Android components runtime (Activity, fragment, Service...)
+The `by viewModel()` function allows us to retrieve a ViewModel instances, create the associated ViewModel Factory for you and bind it to the lifecycle
 :::
 
-:::info
-The `get()` function is here to retrieve directly an instance (non lazy)
-:::
+## Koin module: classic or constructor DSL?
 
-## Verifying your graph
+Here is the Koin moduel declaration for our app:
+
+```kotlin
+val appModule = module {
+    single<HelloRepository> { HelloRepositoryImpl() }
+    factory { MyPresenter(get()) }
+    viewModel { MyViewModel(get()) }
+}
+```
+
+We can write it in a more compact way, by using constructors:
+
+```kotlin
+val appModule = module {
+    singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
+    factoryOf(::UserPresenter)
+    viewModelOf(::UserViewModel)
+}
+```
+
+## Verifying your App!
 
 We can ensure that our Koin configuration is good before launching our app, by verifying our Koin configuration with a simple JUnit Test.
-
-You need to declare a `MockProviderRule` to declare how you mock a class (here for example, we use Mockito). 
 
 The `checkModules` function allow to verify the given Koin modules:
 
@@ -151,4 +239,10 @@ class CheckModulesTest : KoinTest {
         modules(appModule)
     }
 }
-``
+```
+
+With just a JUnit test, you can ensure your definitions configuration are not missing anything!
+
+:::info
+You need to declare a `MockProviderRule` to declare how you mock a class (here for example, we use Mockito). 
+:::
