@@ -8,3 +8,6 @@ classes/
 .DS_Store
 /build
 /captures
+
+# Ignore Gradle build output directory
+build
