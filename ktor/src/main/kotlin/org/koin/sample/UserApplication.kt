@@ -9,6 +9,8 @@ import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
+import org.koin.sample.di.appModule
+import org.koin.sample.service.UserService
 
 fun main(args: Array<String>) {
     // Start Ktor
@@ -16,16 +18,14 @@ fun main(args: Array<String>) {
 }
 
 fun Application.main() {
-    // Install Ktor features
-//    install(DefaultHeaders)
-//    install(CallLogging)
     install(Koin) {
         slf4jLogger()
-        modules(helloAppModule)
+        modules(appModule)
     }
 
     // Lazy inject HelloService
-    val service by inject<HelloService>()
+    val service by inject<UserService>()
+    service.saveDefaultUsers()
 
     // Routing section
     routing {
