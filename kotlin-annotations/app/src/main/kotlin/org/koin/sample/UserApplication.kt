@@ -3,8 +3,10 @@ package org.koin.sample
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.startKoin
-import org.koin.sample.di.appModule
+import org.koin.sample.di.AppModule
 import org.koin.sample.service.UserService
+// generated
+import org.koin.ksp.generated.*
 
 /**
  * UserListApplication - Application Class
@@ -31,7 +33,7 @@ class UserApplication : KoinComponent {
  */
 fun main() {
     startKoin {
-        modules(appModule)
+        modules(AppModule().module)
     }
 
     UserApplication().sayHello()

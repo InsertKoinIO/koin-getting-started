@@ -1,5 +1,7 @@
 package org.koin.sample.data
 
+import org.koin.core.annotation.Single
+
 /**
  * Repository to provide a "Hello" data
  */
@@ -9,6 +11,7 @@ interface UserRepository {
     fun addUsers(users : List<User>)
 }
 
+@Single
 class UserRepositoryImpl : UserRepository {
 
     private val _users = arrayListOf<User>()

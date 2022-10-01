@@ -4,7 +4,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.koin.core.logger.Level
 import org.koin.sample.data.User
-import org.koin.sample.di.userModule
 import org.koin.sample.service.UserService
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
@@ -13,13 +12,16 @@ import org.koin.test.mock.declareMock
 import org.mockito.BDDMockito.given
 import org.mockito.Mockito
 import org.mockito.Mockito.times
+// generated
+import org.koin.ksp.generated.*
+import org.koin.sample.di.AppModule
 
 class HelloMockTest : KoinTest {
 
     @get:Rule
     val koinTestRule = KoinTestRule.create {
         printLogger(Level.DEBUG)
-        modules(userModule)
+        modules(AppModule().module)
     }
 
     @get:Rule
