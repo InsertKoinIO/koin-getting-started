@@ -1,0 +1,31 @@
+buildscript {
+    ext {
+        kotlin_version = "1.6.21"
+        koin_version = "3.2.2"
+        ksp_version = "1.6.21-1.0.6"
+        koin_ksp_version = "1.0.3"
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:7.0.4"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+plugins {
+    id "com.google.devtools.ksp" version "$ksp_version"
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+    }
+}
+
