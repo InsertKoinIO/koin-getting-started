@@ -9,7 +9,7 @@ Let's go 🚀
 ## Get the code
 
 :::info
-[The source code is available at on Github](https://github.com/InsertKoinIO/koin-getting-started/tree/main/getting-started-koin-ktor)
+[The source code is available at on Github](https://github.com/InsertKoinIO/koin-getting-started/tree/main/ktor)
 :::
 
 ## Gradle Setup

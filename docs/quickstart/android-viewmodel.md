@@ -8,7 +8,7 @@ title: Android - ViewModel
 ## Get the code
 
 :::info
-[The source code is available at on Github](https://github.com/InsertKoinIO/koin-getting-started/tree/main/getting-started-koin-android)
+[The source code is available at on Github](https://github.com/InsertKoinIO/koin-getting-started/tree/main/android)
 :::
 
 ## Gradle Setup
