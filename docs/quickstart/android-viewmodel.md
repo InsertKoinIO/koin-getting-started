@@ -100,7 +100,7 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
 
 > UserRepository is referenced in UserViewModel`s constructor
 
-We declare `UserViewModel` in our Koin module. We declare it as a `factory` definition, to not keep any instance in memory (avoid any leak with Android lifecycle):
+We declare `UserViewModel` in our Koin module. We declare it as a `viewModel` definition, to not keep any instance in memory (avoid any leak with Android lifecycle):
 
 ```kotlin
 val appModule = module {
@@ -150,6 +150,9 @@ class MainApplication : Application(){
 }
 ```
 
+:::info
+The `modules()` function in `startKoin` load the given list of modules
+:::
 
 ## Koin module: classic or constructor DSL?
 

@@ -1,5 +1,5 @@
 ---
-title: Android
+title: Android - Annotations
 ---
 
 > This tutorial lets you write an Android application and use Koin dependency injection to retrieve your components.
@@ -13,22 +13,39 @@ title: Android
 
 ## Gradle Setup
 
+Let's configure the KSP Plugin like this:
+
+```groovy
+apply plugin: 'com.google.devtools.ksp'
+
+android {
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+    }
+    // For KSP
+    applicationVariants.configureEach { variant ->
+        kotlin.sourceSets {
+            getByName(name) {
+                kotlin.srcDir("build/generated/ksp/${variant.name}/kotlin")
+            }
+        }
+    }
+}
+```
+
 Add the Koin Android dependency like below:
 
 ```groovy
-// Add Maven Central to your repositories if needed
-repositories {
-	mavenCentral()    
-}
-
 dependencies {
-    // Koin for Android
+    // Koin
     implementation "io.insert-koin:koin-android:$koin_version"
-
-    // Koin Test
-    testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
+    implementation "io.insert-koin:koin-annotations:$koin_ksp_version"
+    ksp "io.insert-koin:koin-ksp-compiler:$koin_ksp_version"
 }
 ```
+
+
 
 ## Application Overview
 
@@ -68,19 +85,23 @@ class UserRepositoryImpl : UserRepository {
 
 ## The Koin module
 
-Use the `module` function to declare a Koin module. A Koin module is the place where we define all our components to be injected.
+Let's declare a `AppModule` module class like below. 
 
 ```kotlin
-val appModule = module {
-    
-}
+@Module
+@ComponentScan("org.koin.sample")
+class AppModule
 ```
 
-Let's declare our first component. We want a singleton of `UserRepository`, by creating an instance of `UserRepositoryImpl`
+* We use the `@Module` to declare our class as Koin module
+* The `@ComponentScan("org.koin.sample")` allow to scann any Koin definition in `"org.koin.sample"`package
+
+Let's simply add `@Single` on `UserRepositoryImpl` class to declare it as singleton:
 
 ```kotlin
-val appModule = module {
-    single<UserRepository> { UserRepositoryImpl() }
+@Single
+class UserRepositoryImpl : UserRepository {
+    // ...
 }
 ```
 
@@ -100,12 +121,12 @@ class UserPresenter(private val repository: UserRepository) {
 
 > UserRepository is referenced in UserPresenter`s constructor
 
-We declare `UserPresenter` in our Koin module. We declare it as a `factory` definition, to not keep any instance in memory (avoid any leak with Android lifecycle):
+We declare `UserPresenter` in our Koin module. We declare it as a `factory` definition with the `@Factory` annotation, to not keep any instance in memory (avoid any leak with Android lifecycle):
 
 ```kotlin
-val appModule = module {
-     single<UserRepository> { UserRepositoryImpl() }
-     factory { MyPresenter(get()) }
+@Factory
+class UserPresenter(private val repository: UserRepository) {
+    // ...
 }
 ```
 
@@ -137,6 +158,9 @@ The `by inject()` function allows us to retrieve Koin instances, in Android comp
 We need to start Koin with our Android application. Just call the `startKoin()` function in the application's main entry point, our `MainApplication` class:
 
 ```kotlin
+// generated
+import org.koin.ksp.generated.*
+
 class MainApplication : Application(){
     override fun onCreate() {
         super.onCreate()
@@ -144,33 +168,52 @@ class MainApplication : Application(){
         startKoin{
             androidLogger()
             androidContext(this@MainApplication)
-            modules(appModule)
+            modules(AppModule().module)
         }
     }
 }
 ```
 
+The Koin module is generated from `AppModule` with the `.module` extension: Just use the `AppModule().module` expression to get the Koin module from the annotations.
+
 :::info
-The `modules()` function in `startKoin` load the given list of modules
+The `import org.koin.ksp.generated.*` import is required to allow to use generated Koin module content
 :::
 
-## Koin module: classic or constructor DSL?
+## Displaying User with ViewModel
 
-Here is the Koin moduel declaration for our app:
+Let's write a ViewModel component to display a user:
 
 ```kotlin
-val appModule = module {
-    single<HelloRepository> { HelloRepositoryImpl() }
-    factory { MyPresenter(get()) }
+@KoinViewModel
+class UserViewModel(private val repository: UserRepository) : ViewModel() {
+
+    fun sayHello(name : String) : String{
+        val foundUser = repository.findUser(name)
+        return foundUser?.let { "Hello '$it' from $this" } ?: "User '$name' not found!"
+    }
 }
 ```
 
-We can write it in a more compact way, by using constructors:
+> UserRepository is referenced in UserViewModel`s constructor
+
+The `UserViewModel` is tagged with `@KoinViewModel` annotation to declare the Koin ViewModel definition, to not keep any instance in memory (avoid any leak with Android lifecycle).
+
+
+## Injecting ViewModel in Android
+
+The `UserViewModel` component will be created, resolving the `UserRepository` instance with it. To get it into our Activity, let's inject it with the `by viewModel()` delegate function: 
 
 ```kotlin
-val appModule = module {
-    singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
-    factoryOf(::UserPresenter)
+class MainActivity : AppCompatActivity() {
+
+    private val viewModel: UserViewModel by viewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        
+        //...
+    }
 }
 ```
 
@@ -192,7 +235,7 @@ class CheckModulesTest : KoinTest {
     // verify the Koin configuration
     @Test
     fun checkAllModules() = checkModules {
-        modules(appModule)
+        modules(AppModule().module)
     }
 }
 ```

@@ -1,5 +1,5 @@
 ---
-title: Kotlin
+title: Kotlin - Annotations
 ---
 
 > This tutorial lets you write a Kotlin application and use Koin dependency injection to retrieve your components.
@@ -8,25 +8,40 @@ title: Kotlin
 ## Get the code
 
 :::info
-[The source code is available at on Github](https://github.com/InsertKoinIO/koin-getting-started/tree/main/kotlin)
+[The source code is available at on Github](https://github.com/InsertKoinIO/koin-getting-started/tree/main/kotlin-annotations)
 :::
 
 ## Setup
 
-First, check that the `koin-core` dependency is added like below:
+Let's configure the KSP plugin like below in Gradle:
 
 ```groovy
-// Add Maven Central to your repositories if needed
-repositories {
-	mavenCentral()    
+plugins {
+    // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
+    id 'org.jetbrains.kotlin.jvm' version "$kotlin_version"
+    // Apply the application plugin to add support for building a CLI application in Java.
+    id "com.google.devtools.ksp" version "$ksp_version"
+    id 'application'
 }
 
-dependencies {
-    // Koin for Kotlin apps
-    compile "io.insert-koin:koin-core:$koin_version"
+// KSP - To use generated sources
+sourceSets.main {
+    java.srcDirs("build/generated/ksp/main/kotlin")
+}
+```
 
-    // Testing
-    testCompile "io.insert-koin:koin-test:$koin_version"
+Let's setup the dependencies like below: 
+
+```groovy
+dependencies {
+
+    // Koin
+    implementation "io.insert-koin:koin-core:$koin_version"
+    implementation "io.insert-koin:koin-annotations:$koin_ksp_version"
+    ksp "io.insert-koin:koin-ksp-compiler:$koin_ksp_version"
+    // Test
+    testImplementation "io.insert-koin:koin-test:$koin_version"
+    testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
 }
 ```
 
@@ -68,19 +83,23 @@ class UserRepositoryImpl : UserRepository {
 
 ## The Koin module
 
-Use the `module` function to declare a Koin module. A Koin module is the place where we define all our components to be injected.
+Let's declare a `AppModule` module class like below. 
 
 ```kotlin
-val appModule = module {
-    
-}
+@Module
+@ComponentScan("org.koin.sample")
+class AppModule
 ```
 
-Let's declare our first component. We want a singleton of `UserRepository`, by creating an instance of `UserRepositoryImpl`
+* We use the `@Module` to declare our class as Koin module
+* The `@ComponentScan("org.koin.sample")` allow to scann any Koin definition in `"org.koin.sample"`package
+
+Let's simply add `@Single` on `UserRepositoryImpl` class to declare it as singleton:
 
 ```kotlin
-val appModule = module {
-    single<UserRepository> { UserRepositoryImpl() }
+@Single
+class UserRepositoryImpl : UserRepository {
+    // ...
 }
 ```
 
@@ -97,12 +116,12 @@ class UserService(private val userRepository: UserRepository) {
 
 > UserRepository is referenced in UserPresenter`s constructor
 
-We declare `UserService` in our Koin module. We declare it as a `single` definition:
+Let's simply add `@Single` on `UserService` class to declare it as singleton:
 
 ```kotlin
-val appModule = module {
-     single<UserRepository> { UserRepositoryImpl() }
-     single { UserService(get()) }
+@Single
+class UserService(private val userRepository: UserRepository) {
+    // ...
 }
 ```
 
@@ -136,35 +155,21 @@ The `by inject()` function allows us to retrieve Koin instances, in any class th
 We need to start Koin with our application. Just call the `startKoin()` function in the application's main entry point, our `main` function:
 
 ```kotlin
+// generated
+import org.koin.ksp.generated.*
+
 fun main() {
     startKoin {
-        modules(appModule)
+        modules(AppModule().module)
     }
 
     UserApplication().sayHello()
 }
 ```
 
+The Koin module is generated from `AppModule` with the `.module` extension: Just use the `AppModule().module` expression to get the Koin module from the annotations.
+
+
 :::info
-The `modules()` function in `startKoin` load the given list of modules
+The `import org.koin.ksp.generated.*` import is required to allow to use generated Koin module content
 :::
-
-## Koin module: classic or constructor DSL?
-
-Here is the Koin moduel declaration for our app:
-
-```kotlin
-val appModule = module {
-    single<UserRepository> { UserRepositoryImpl() }
-    single { UserService(get()) }
-}
-```
-
-We can write it in a more compact way, by using constructors:
-
-```kotlin
-val appModule = module {
-    singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
-    singleOf(::UserService)
-}
-```

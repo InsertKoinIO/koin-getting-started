@@ -4,16 +4,6 @@ title: Ktor
 
 > Ktor is a framework for building asynchronous servers and clients in connected systems using the powerful Kotlin programming language. We will use Ktor here, to build a simple web application.
 
-Let's go with the following components to chain : a Controller, a Service and a Repository.
-
-```kotlin
-Ktor Controller (http) -> Service (business) -> Repository (data)
-```
-
-- a Ktor Controller (routing function) to handle http route and return result from the service
-- a Service to *handle business* and take data from repository
-- a Repository to provide data
-
 Let's go 🚀
 
 ## Get the code
@@ -33,29 +23,84 @@ repositories {
 }
 dependencies {
     // Koin for Kotlin apps
-    compile "io.insert-koin:koin-ktor:$koin_version"
+    implementation "io.insert-koin:koin-ktor:$koin_version"
+    implementation "io.insert-koin:koin-logger-slf4j:$koin_version"
 }
 ```
 
-## Service & Repository
+## Application Overview
 
-Let's write our Service, a component that will ask Repository for data:
+The idea of the application is to manage a list of users, and display it in our `UserApplication` class:
+
+> Users -> UserRepository -> UserService -> UserApplication
+
+## The "User" Data
+
+We will manage a collection of Users. Here is the data class: 
 
 ```kotlin
-interface HelloService {
-    fun sayHello(): String
+data class User(val name : String)
+```
+
+We create a "Repository" component to manage the list of users (add users or find one by name). Here below, the `UserRepository` interface and its implementation:
+
+```kotlin
+interface UserRepository {
+    fun findUser(name : String): User?
+    fun addUsers(users : List<User>)
 }
 
-class HelloServiceImpl(val helloRepository: HelloRepository) : HelloService {
-    override fun sayHello() = "Hello ${helloRepository.getHello()} !"
+class UserRepositoryImpl : UserRepository {
+
+    private val _users = arrayListOf<User>()
+
+    override fun findUser(name: String): User? {
+        return _users.firstOrNull { it.name == name }
+    }
+
+    override fun addUsers(users : List<User>) {
+        _users.addAll(users)
+    }
 }
 ```
 
-and our Repository, which provide data:
+## The Koin module
+
+Use the `module` function to declare a Koin module. A Koin module is the place where we define all our components to be injected.
 
 ```kotlin
-class HelloRepository {
-    override fun getHello(): String = "Ktor & Koin"
+val appModule = module {
+    
+}
+```
+
+Let's declare our first component. We want a singleton of `UserRepository`, by creating an instance of `UserRepositoryImpl`
+
+```kotlin
+val appModule = module {
+    single<UserRepository> { UserRepositoryImpl() }
+}
+```
+
+## The UserService Component
+
+Let's write the UserService component to request the default user:
+
+```kotlin
+class UserService(private val userRepository: UserRepository) {
+
+    fun getDefaultUser() : User = userRepository.findUser(DefaultData.DEFAULT_USER.name) ?: error("Can't find default user")
+}
+```
+
+> UserRepository is referenced in UserPresenter`s constructor
+
+We declare `UserService` in our Koin module. We declare it as a `single` definition:
+
+```kotlin
+val appModule = module {
+     single<UserRepository> { UserRepositoryImpl() }
+     single { UserService(get()) }
 }
 ```
 
@@ -67,7 +112,7 @@ Finally, we need an HTTP Controller to create the HTTP Route. In Ktor is will be
 fun Application.main() {
 
     // Lazy inject HelloService
-    val service: HelloService by inject()
+    val service by inject<UserService>()
 
     // Routing section
     routing {
@@ -91,7 +136,7 @@ ktor {
     }
 
     application {
-        modules = [ org.koin.sample.HelloApplicationKt.main ]
+        modules = [ org.koin.sample.UserApplicationKt.main ]
     }
 }
 ```
@@ -101,9 +146,9 @@ ktor {
 Let's assemble our components with a Koin module:
 
 ```kotlin
-val helloAppModule = module {
-    singleOf(::HelloServiceImpl) { bind<HelloService>() }
-    singleOf(::HelloRepository)
+val appModule = module {
+    singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
+    singleOf(::UserService)
 }
 ```
 
@@ -113,15 +158,14 @@ Finally, let's start Koin from Ktor:
 
 ```kotlin
 fun Application.main() {
-
-    // Install Koin
     install(Koin) {
-        SLF4JLogger()
-        modules(helloAppModule)
+        slf4jLogger()
+        modules(appModule)
     }
 
     // Lazy inject HelloService
-    val service: HelloService by inject()
+    val service by inject<UserService>()
+    service.saveDefaultUsers()
 
     // Routing section
     routing {
