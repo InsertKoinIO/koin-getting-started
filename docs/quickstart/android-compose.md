@@ -1,5 +1,5 @@
 ---
-title: Android - Compose
+title: Android - Jetpack Compose
 ---
 
 > This tutorial lets you write an Android application and use Koin dependency injection to retrieve your components.
@@ -103,6 +103,8 @@ val appModule = module {
      viewModel { MyViewModel(get()) }
 }
 ```
+
+> The `get()` function allow to ask Koin to resolve the needed dependency.
 
 ### Injecting ViewModel in Compose
 

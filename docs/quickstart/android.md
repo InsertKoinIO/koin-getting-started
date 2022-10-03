@@ -102,6 +102,8 @@ val appModule = module {
 }
 ```
 
+> The `get()` function allow to ask Koin to resolve the needed dependency.
+
 ## Injecting Dependencies in Android
 
 The `UserPresenter` component will be created, resolving the `UserRepository` instance with it. To get it into our Activity, let's inject it with the `by inject()` delegate function: 

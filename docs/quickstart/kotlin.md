@@ -99,6 +99,8 @@ val appModule = module {
 }
 ```
 
+> The `get()` function allow to ask Koin to resolve the needed dependency.
+
 ## Injecting Dependencies in UserApplication
 
 The `UserApplication` class will help bootstrap instances out of Koin. It will resolve the `UserService`, thanks to `KoinComponent` interface. This allows to inject it with the `by inject()` delegate function: 
