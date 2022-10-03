@@ -2,10 +2,10 @@ import SwiftUI
 import shared
 
 struct ContentView: View {
-    let greet = KMPUserPresenterHelper().sayHello()
+    let helloText = KMPUserPresenterHelper().sayHello()
 
 	var body: some View {
-		Text(greet)
+		Text(helloText)
 	}
 }
 
