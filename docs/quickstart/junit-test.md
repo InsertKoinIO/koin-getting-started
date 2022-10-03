@@ -15,10 +15,6 @@ title: JUnit Tests
 First, add the Koin dependency like below:
 
 ```groovy
-// Add Maven Central to your repositories if needed
-repositories {
-	mavenCentral()    
-}
 dependencies {
     // Koin testing tools
     testCompile "io.insert-koin:koin-test:$koin_version"

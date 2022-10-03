@@ -16,17 +16,10 @@ title: Kotlin
 First, check that the `koin-core` dependency is added like below:
 
 ```groovy
-// Add Maven Central to your repositories if needed
-repositories {
-	mavenCentral()    
-}
-
 dependencies {
+    
     // Koin for Kotlin apps
     compile "io.insert-koin:koin-core:$koin_version"
-
-    // Testing
-    testCompile "io.insert-koin:koin-test:$koin_version"
 }
 ```
 

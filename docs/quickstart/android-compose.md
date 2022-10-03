@@ -1,14 +1,14 @@
 ---
-title: Android
+title: Android - Compose
 ---
 
 > This tutorial lets you write an Android application and use Koin dependency injection to retrieve your components.
-> You need around __10/15 min__ to do the tutorial.
+> You need around __10 min__ to do the tutorial.
 
 ## Get the code
 
 :::info
-[The source code is available at on Github](https://github.com/InsertKoinIO/koin-getting-started/tree/main/android)
+[The source code is available at on Github](https://github.com/InsertKoinIO/koin-getting-started/tree/main/android-compose)
 :::
 
 ## Gradle Setup
@@ -19,7 +19,7 @@ Add the Koin Android dependency like below:
 dependencies {
 
     // Koin for Android
-    implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-androidx-compose:$koin_version"
 }
 ```
 
@@ -27,7 +27,7 @@ dependencies {
 
 The idea of the application is to manage a list of users, and display it in our `MainActivity` class with a Presenter or a ViewModel:
 
-> Users -> UserRepository -> (Presenter or ViewModel) -> MainActivity
+> Users -> UserRepository -> (Presenter or ViewModel) -> Composable
 
 ## The "User" Data
 
@@ -77,12 +77,14 @@ val appModule = module {
 }
 ```
 
-## Displaying User with Presenter
+## Displaying User with UserViewModel
 
-Let's write a presenter component to display a user:
+### The `UserViewModel` class
+
+Let's write a ViewModel component to display a user:
 
 ```kotlin
-class UserPresenter(private val repository: UserRepository) {
+class UserViewModel(private val repository: UserRepository) : ViewModel() {
 
     fun sayHello(name : String) : String{
         val foundUser = repository.findUser(name)
@@ -91,39 +93,74 @@ class UserPresenter(private val repository: UserRepository) {
 }
 ```
 
-> UserRepository is referenced in UserPresenter`s constructor
+> UserRepository is referenced in UserViewModel's constructor
 
-We declare `UserPresenter` in our Koin module. We declare it as a `factory` definition, to not keep any instance in memory (avoid any leak with Android lifecycle):
+We declare `UserViewModel` in our Koin module. We declare it as a `viewModel` definition, to not keep any instance in memory (avoid any leak with Android lifecycle):
 
 ```kotlin
 val appModule = module {
      single<UserRepository> { UserRepositoryImpl() }
-     factory { MyPresenter(get()) }
+     viewModel { MyViewModel(get()) }
 }
 ```
 
-## Injecting Dependencies in Android
+### Injecting ViewModel in Compose
 
-The `UserPresenter` component will be created, resolving the `UserRepository` instance with it. To get it into our Activity, let's inject it with the `by inject()` delegate function: 
+The `UserViewModel` component will be created, resolving the `UserRepository` instance with it. To get it into our Activity, let's inject it with the `koinViewModel()` function: 
 
 ```kotlin
-class MainActivity : AppCompatActivity() {
+@Composable
+fun ViewModelInject(userName : String, viewModel: UserViewModel = koinViewModel()){
+    Text(text = viewModel.sayHello(userName), modifier = Modifier.padding(8.dp))
+}
+```
 
-    private val presenter: UserPresenter by inject()
+:::info
+The `koinViewModel` function allows us to retrieve a ViewModel instances, create the associated ViewModel Factory for you and bind it to the lifecycle
+:::
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        
-        //...
+## Displaying User with UserStateHolder
+
+### The `UserStateHolder` class
+
+Let's write a ViewModel component to display a user:
+
+```kotlin
+class UserStateHolder(private val repository: UserRepository) {
+
+    fun sayHello(name : String) : String{
+        val foundUser = repository.findUser(name)
+        return foundUser?.let { "Hello '$it' from $this" } ?: "User '$name' not found!"
     }
 }
 ```
 
-That's it, your app is ready.
+> UserRepository is referenced in UserViewModel's constructor
+
+We declare `UserViewModel` in our Koin module. We declare it as a `viewModel` definition, to not keep any instance in memory (avoid any leak with Android lifecycle):
+
+```kotlin
+val appModule = module {
+     single<UserRepository> { UserRepositoryImpl() }
+     factory { UserStateHolder(get()) }
+}
+```
+
+### Injecting UserStateHolder in Compose
+
+The `UserViewModel` component will be created, resolving the `UserRepository` instance with it. To get it into our Activity, let's inject it with the `get()` function: 
+
+```kotlin
+@Composable
+fun FactoryInject(userName : String, presenter: UserStateHolder = get()){
+    Text(text = presenter.sayHello(userName), modifier = Modifier.padding(8.dp))
+}
+```
 
 :::info
-The `by inject()` function allows us to retrieve Koin instances, in Android components runtime (Activity, fragment, Service...)
+The `get` function allows us to retrieve a ViewModel instances, create the associated ViewModel Factory for you and bind it to the lifecycle
 :::
+
 
 ## Start Koin
 
@@ -154,7 +191,7 @@ Here is the Koin moduel declaration for our app:
 ```kotlin
 val appModule = module {
     single<HelloRepository> { HelloRepositoryImpl() }
-    factory { MyPresenter(get()) }
+    viewModel { MyViewModel(get()) }
 }
 ```
 
@@ -163,7 +200,7 @@ We can write it in a more compact way, by using constructors:
 ```kotlin
 val appModule = module {
     singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
-    factoryOf(::UserPresenter)
+    viewModelOf(::UserViewModel)
 }
 ```
 

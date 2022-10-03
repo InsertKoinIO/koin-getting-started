@@ -16,17 +16,10 @@ title: Android - ViewModel
 Add the Koin Android dependency like below:
 
 ```groovy
-// Add Maven Central to your repositories if needed
-repositories {
-	mavenCentral()    
-}
-
 dependencies {
+
     // Koin for Android
     implementation "io.insert-koin:koin-android:$koin_version"
-
-    // Koin Test
-    testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
 }
 ```
 
@@ -177,6 +170,25 @@ val appModule = module {
 ## Verifying your App!
 
 We can ensure that our Koin configuration is good before launching our app, by verifying our Koin configuration with a simple JUnit Test.
+
+### Gradle Setup
+
+Add the Koin Android dependency like below:
+
+```groovy
+// Add Maven Central to your repositories if needed
+repositories {
+	mavenCentral()    
+}
+
+dependencies {
+    
+    // Koin for Tests
+    testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
+}
+```
+
+### Checking your modules
 
 The `checkModules` function allow to verify the given Koin modules:
 

@@ -221,6 +221,25 @@ class MainActivity : AppCompatActivity() {
 
 We can ensure that our Koin configuration is good before launching our app, by verifying our Koin configuration with a simple JUnit Test.
 
+### Gradle Setup
+
+Add the Koin Android dependency like below:
+
+```groovy
+// Add Maven Central to your repositories if needed
+repositories {
+	mavenCentral()    
+}
+
+dependencies {
+    
+    // Koin for Tests
+    testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
+}
+```
+
+### Checking your modules
+
 The `checkModules` function allow to verify the given Koin modules:
 
 ```kotlin

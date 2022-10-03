@@ -39,9 +39,6 @@ dependencies {
     implementation "io.insert-koin:koin-core:$koin_version"
     implementation "io.insert-koin:koin-annotations:$koin_ksp_version"
     ksp "io.insert-koin:koin-ksp-compiler:$koin_ksp_version"
-    // Test
-    testImplementation "io.insert-koin:koin-test:$koin_version"
-    testImplementation "io.insert-koin:koin-test-junit4:$koin_version"
 }
 ```
 

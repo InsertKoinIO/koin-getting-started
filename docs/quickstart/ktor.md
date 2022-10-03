@@ -17,10 +17,6 @@ Let's go 🚀
 First, add the Koin dependency like below:
 
 ```kotlin
-// Add Maven Central to your repositories if needed
-repositories {
-	mavenCentral()    
-}
 dependencies {
     // Koin for Kotlin apps
     implementation "io.insert-koin:koin-ktor:$koin_version"
