@@ -1,4 +1,4 @@
-package com.example.helloworldkmp.android.di
+package org.koin.sample.di
 
 import org.koin.sample.AndroidUserViewModel
 import org.koin.androidx.viewmodel.dsl.viewModelOf

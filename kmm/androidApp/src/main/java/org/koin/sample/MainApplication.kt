@@ -1,7 +1,7 @@
 package org.koin.sample
 
 import android.app.Application
-import com.example.helloworldkmp.android.di.androidModule
+import org.koin.sample.di.androidModule
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
