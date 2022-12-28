@@ -1,9 +1,9 @@
 buildscript {
     ext {
-        kotlin_version = "1.6.21"
-        koin_version = "3.2.2"
-        ksp_version = "1.6.21-1.0.6"
-        koin_ksp_version = "1.0.3"
+        kotlin_version = "1.7.21"
+        koin_version = "3.3.2"
+        ksp_version = "1.7.21-1.0.8"
+        koin_ksp_version = "1.1.0"
     }
 
     repositories {
@@ -12,7 +12,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.0.4"
+        classpath "com.android.tools.build:gradle:7.3.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }

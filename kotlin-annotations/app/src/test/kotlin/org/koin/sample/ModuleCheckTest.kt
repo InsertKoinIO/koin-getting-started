@@ -4,10 +4,10 @@ import org.junit.Test
 import org.junit.experimental.categories.Category
 import org.koin.test.AutoCloseKoinTest
 import org.koin.test.category.CheckModuleTest
-import org.koin.test.check.checkModules
 // generated
 import org.koin.ksp.generated.*
 import org.koin.sample.di.AppModule
+import org.koin.test.verify.verify
 
 /**
  * Dry run configuration
@@ -16,7 +16,7 @@ import org.koin.sample.di.AppModule
 class ModuleCheckTest : AutoCloseKoinTest() {
 
     @Test
-    fun checkModules() = checkModules {
-        modules(AppModule().module)
+    fun checkModules(){
+        AppModule().module.verify()
     }
 }

@@ -7,8 +7,8 @@
  */
 buildscript {
     ext {
-        kotlin_version = "1.6.21"
-        koin_version = "3.2.2"
+        kotlin_version = "1.7.21"
+        koin_version = "3.3.2"
     }
 }
 
@@ -23,6 +23,7 @@ plugins {
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {

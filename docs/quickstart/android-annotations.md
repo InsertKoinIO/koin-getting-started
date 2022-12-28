@@ -240,27 +240,20 @@ dependencies {
 
 ### Checking your modules
 
-The `checkModules` function allow to verify the given Koin modules:
+The `verify()` function allow to verify the given Koin modules:
 
 ```kotlin
 class CheckModulesTest : KoinTest {
 
-    // Declare Mock with Mockito
-    @get:Rule
-    val mockProvider = MockProviderRule.create { clazz ->
-        Mockito.mock(clazz.java)
-    }
-
-    // verify the Koin configuration
     @Test
-    fun checkAllModules() = checkModules {
-        modules(AppModule().module)
+    fun checkAllModules() {
+
+        AppModule().module.verify(
+            extraTypes = listOf(
+                SavedStateHandle::class
+            ))
     }
 }
 ```
 
 With just a JUnit test, you can ensure your definitions configuration are not missing anything!
-
-:::info
-You need to declare a `MockProviderRule` to declare how you mock a class (here for example, we use Mockito). 
-:::

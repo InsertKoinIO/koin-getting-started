@@ -3,7 +3,7 @@ package org.koin.sample
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
-import org.koin.sample.di.userModule
+import org.koin.sample.di.appModule
 import org.koin.sample.service.UserService
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
@@ -16,7 +16,7 @@ class HelloAppTest : KoinTest {
     @get:Rule
     val koinTestRule = KoinTestRule.create {
         printLogger()
-        modules(userModule)
+        modules(appModule)
     }
 
     @Test

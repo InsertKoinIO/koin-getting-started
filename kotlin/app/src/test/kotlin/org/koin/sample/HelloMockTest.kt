@@ -4,7 +4,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.koin.core.logger.Level
 import org.koin.sample.data.User
-import org.koin.sample.di.userModule
+import org.koin.sample.di.appModule
 import org.koin.sample.service.UserService
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
@@ -19,7 +19,7 @@ class HelloMockTest : KoinTest {
     @get:Rule
     val koinTestRule = KoinTestRule.create {
         printLogger(Level.DEBUG)
-        modules(userModule)
+        modules(appModule)
     }
 
     @get:Rule

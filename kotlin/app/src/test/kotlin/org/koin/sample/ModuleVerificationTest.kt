@@ -2,19 +2,19 @@ package org.koin.sample
 
 import org.junit.Test
 import org.junit.experimental.categories.Category
-import org.koin.sample.di.userModule
+import org.koin.sample.di.appModule
 import org.koin.test.AutoCloseKoinTest
 import org.koin.test.category.CheckModuleTest
-import org.koin.test.check.checkModules
+import org.koin.test.verify.verify
 
 /**
  * Dry run configuration
  */
 @Category(CheckModuleTest::class)
-class ModuleCheckTest : AutoCloseKoinTest() {
+class ModuleVerificationTest : AutoCloseKoinTest() {
 
     @Test
-    fun checkModules() = checkModules {
-        modules(userModule)
+    fun verifyModules(){
+        appModule.verify()
     }
 }

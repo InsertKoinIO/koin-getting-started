@@ -1,7 +1,7 @@
 buildscript {
     ext {
-        kotlin_version = "1.6.21"
-        koin_version = "3.2.2"
+        kotlin_version = "1.7.21"
+        koin_version = "3.3.2"
     }
     repositories {
         mavenLocal()
@@ -9,7 +9,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:7.0.4"
+        classpath "com.android.tools.build:gradle:7.3.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }

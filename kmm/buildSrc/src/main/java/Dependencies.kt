@@ -1,5 +1,5 @@
 object Versions {
-    const val koin = "3.2.2"
+    const val koin = "3.3.2"
 }
 
 object Deps {
@@ -9,5 +9,4 @@ object Deps {
         const val test = "io.insert-koin:koin-test:${Versions.koin}"
         const val android = "io.insert-koin:koin-android:${Versions.koin}"
     }
-
 }
