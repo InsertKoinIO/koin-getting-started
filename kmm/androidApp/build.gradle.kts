@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = 33
     defaultConfig {
         applicationId = "org.koin.sample"
         minSdk = 21
@@ -22,7 +22,7 @@ android {
 dependencies {
     implementation(project(":shared"))
     implementation("com.google.android.material:material:1.4.0")
-    implementation("androidx.appcompat:appcompat:1.4.1")
+    implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     with(Deps.Koin) {

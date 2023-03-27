@@ -2,6 +2,7 @@ package org.koin.sample
 
 import org.junit.Test
 import org.junit.experimental.categories.Category
+import org.koin.android.test.verify.androidVerify
 import org.koin.sample.di.appModule
 import org.koin.test.KoinTest
 import org.koin.test.category.CheckModuleTest
@@ -12,6 +13,6 @@ class CheckModulesTest : KoinTest {
 
     @Test
     fun checkAllModules(){
-        appModule.verify()
+        appModule.androidVerify()
     }
 }

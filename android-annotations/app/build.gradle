@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.google.devtools.ksp'
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
     buildToolsVersion "30.0.3"
     defaultConfig {
         minSdkVersion 21
@@ -32,6 +32,7 @@ dependencies {
 
     // Koin
     implementation "io.insert-koin:koin-android:$koin_version"
+    implementation "io.insert-koin:koin-android-test:$koin_version"
     implementation "io.insert-koin:koin-annotations:$koin_ksp_version"
     ksp "io.insert-koin:koin-ksp-compiler:$koin_ksp_version"
 

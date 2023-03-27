@@ -1,5 +1,5 @@
 object Versions {
-    const val koin = "3.3.2"
+    const val koin = "3.4.0"
 }
 
 object Deps {
