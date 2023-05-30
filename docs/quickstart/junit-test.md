@@ -7,7 +7,7 @@ title: JUnit Tests
 ## Get the code
 
 :::info
-[The source code is available at on Github](https://github.com/InsertKoinIO/koin-getting-started/tree/main/core)
+[The source code is available at on Github](https://github.com/InsertKoinIO/koin-getting-started/tree/main/kotlin)
 :::
 
 ## Gradle Setup
