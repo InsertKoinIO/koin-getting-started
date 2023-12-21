@@ -1,9 +1,9 @@
 
 buildscript {
     ext {
-        kotlin_version = "1.8.10"
-        koin_version = "3.4.0"
-        ktor_version = "2.2.4"
+        kotlin_version = "1.9.21"
+        koin_version = "3.5.3"
+        ktor_version = "2.3.7"
     }
     repositories {
         mavenLocal()

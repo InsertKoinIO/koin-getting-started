@@ -25,6 +25,11 @@ android {
     }
 }
 
+// Compile time check
+ksp {
+    arg("KOIN_CONFIG_CHECK","true")
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 

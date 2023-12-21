@@ -217,6 +217,16 @@ class MainActivity : AppCompatActivity() {
 }
 ```
 
+## Compile Time Checks
+
+Koin Annotations allows to check your Koin configuration at compile time. This is available by jusing the following Gradle option:
+
+```groovy
+ksp {
+    arg("KOIN_CONFIG_CHECK","true")
+}
+```
+
 ## Verifying your App!
 
 We can ensure that our Koin configuration is good before launching our app, by verifying our Koin configuration with a simple JUnit Test.

@@ -170,3 +170,13 @@ The Koin module is generated from `AppModule` with the `.module` extension: Just
 :::info
 The `import org.koin.ksp.generated.*` import is required to allow to use generated Koin module content
 :::
+
+## Compile Time Checks
+
+Koin Annotations allows to check your Koin configuration at compile time. This is available by jusing the following Gradle option:
+
+```groovy
+ksp {
+    arg("KOIN_CONFIG_CHECK","true")
+}
+```

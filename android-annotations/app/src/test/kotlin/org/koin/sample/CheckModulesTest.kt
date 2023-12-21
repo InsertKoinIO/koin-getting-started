@@ -11,7 +11,9 @@ import org.koin.test.category.CheckModuleTest
 
 @Category(CheckModuleTest::class)
 class CheckModulesTest : KoinTest {
-    @Test
+
+    // Not needed with KOIN_CONFIG_CHECK
+//    @Test
     fun checkAllModules() {
         AppModule().module.androidVerify()
     }

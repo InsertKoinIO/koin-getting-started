@@ -15,7 +15,8 @@ import org.koin.test.verify.verify
 @Category(CheckModuleTest::class)
 class ModuleCheckTest : AutoCloseKoinTest() {
 
-    @Test
+    // Not needed if KOIN_CONFIG_CHECK is activated
+//    @Test
     fun checkModules(){
         AppModule().module.verify()
     }
