@@ -141,6 +141,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		AC000489FFA68144832EDB95 /* xcschemes */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = xcschemes;
+			path = Pods.xcodeproj/xcuserdata/arnaud.xcuserdatad/xcschemes;
+			sourceTree = "<group>";
+		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
@@ -149,6 +157,7 @@
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
 				1F86AA6785DF34AFD5A71790761717DE /* Products */,
 				11C970DEAE48C6D0282DFE54684F53F1 /* Targets Support Files */,
+				AC000489FFA68144832EDB95 /* xcschemes */,
 			);
 			sourceTree = "<group>";
 		};
