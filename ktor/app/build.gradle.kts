@@ -1,4 +1,5 @@
 val koinVersion = "4.0.0"
+val ktorVersion = "2.3.12"
 
 plugins {
     val kotlinVersion = "2.0.20"
@@ -14,8 +15,13 @@ repositories {
 }
 
 dependencies {
+    implementation("io.ktor:ktor-server-netty:$ktorVersion")
+    testImplementation("io.ktor:ktor-server-test-host:$ktorVersion")
+    // Logging
+    implementation("ch.qos.logback:logback-classic:1.4.12")
     // Koin dependencies
-    implementation("io.insert-koin:koin-core:$koinVersion")
+    implementation("io.insert-koin:koin-ktor:$koinVersion")
+    implementation("io.insert-koin:koin-logger-slf4j:$koinVersion")
     // Koin testing
     testImplementation("io.insert-koin:koin-test:$koinVersion")
     testImplementation("io.insert-koin:koin-test-junit4:$koinVersion")
