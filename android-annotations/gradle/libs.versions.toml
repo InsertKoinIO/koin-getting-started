@@ -1,0 +1,21 @@
+[versions]
+
+agp = "8.5.2"
+kotlin = "2.0.20"
+koin = "4.0.0"
+android-appcompat = "1.7.0"
+koin-annotations = "2.0.0-Beta1"
+ksp = "2.0.20-1.0.25"
+
+[libraries]
+android-appcompat = {module = "androidx.appcompat:appcompat", version.ref = "android-appcompat"}
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-test = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
+koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koin-annotations" }
+koin-ksp = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-annotations" }
+
+
+[plugins]
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
