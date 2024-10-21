@@ -27,6 +27,11 @@ android {
     }
 }
 
+// Compile time check
+ksp {
+    arg("KOIN_CONFIG_CHECK","true")
+}
+
 dependencies {
     implementation(libs.android.appcompat)
     implementation(libs.koin.android)
