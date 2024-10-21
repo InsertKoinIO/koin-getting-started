@@ -11,8 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.activity.compose.setContent
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.get
+import org.koin.androidx.compose.KoinAndroidContext
 import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.koinInject
 import org.koin.sample.data.DefaultData
 
 class MainActivity : AppCompatActivity() {
@@ -20,7 +21,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MaterialTheme { App() }
+            MaterialTheme {
+                KoinAndroidContext {
+                    App()
+                }
+            }
         }
     }
 }
@@ -35,7 +40,7 @@ fun App(){
 }
 
 @Composable
-fun FactoryInject(userName : String, presenter: UserStateHolder = get()){
+fun FactoryInject(userName : String, presenter: UserStateHolder = koinInject()){
     Text(text = presenter.sayHello(userName), modifier = Modifier.padding(8.dp))
 }
 
