@@ -1,9 +1,9 @@
 package org.koin.sample.di
 
-import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 import org.koin.sample.UserPresenter
 import org.koin.sample.UserViewModel
@@ -18,7 +18,7 @@ val appModule = module {
 
 // Classical DSL version
 //val appModule = module {
-//    single<HelloRepository> { HelloRepositoryImpl() }
-//    factory { MyPresenter(get()) }
-//    viewModel { MyViewModel(get()) }
+//    single<UserRepository> { UserRepositoryImpl() }
+//    factory { UserPresenter(get()) }
+//    viewModel { UserViewModel(get()) }
 //}

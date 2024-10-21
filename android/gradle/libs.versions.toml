@@ -1,0 +1,15 @@
+[versions]
+
+agp = "8.5.2"
+kotlin = "2.0.20"
+koin = "4.0.0"
+android-appcompat = "1.7.0"
+
+[libraries]
+android-appcompat = {module = "androidx.appcompat:appcompat", version.ref = "android-appcompat"}
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-test = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
+
+[plugins]
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-application = { id = "com.android.application", version.ref = "agp" }

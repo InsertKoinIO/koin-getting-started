@@ -21,7 +21,6 @@ dependencies {
 
     // Koin dependencies
     implementation("io.insert-koin:koin-core:$koinVersion")
-
     // Koin testing
     testImplementation("io.insert-koin:koin-test:$koinVersion")
     testImplementation("io.insert-koin:koin-test-junit4:$koinVersion")
