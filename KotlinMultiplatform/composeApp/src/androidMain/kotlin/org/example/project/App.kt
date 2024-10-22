@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -18,12 +19,12 @@ import kotlinproject.composeapp.generated.resources.compose_multiplatform
 import org.koin.compose.KoinApplication
 import org.koin.compose.koinInject
 import org.koin.sample.UserPresenter
-import org.koin.sample.di.koinConfiguration
+import org.koin.sample.koinAndroidConfiguration
 
 @Composable
 @Preview
 fun App() {
-    KoinApplication(application = koinConfiguration()){
+    KoinApplication(application = koinAndroidConfiguration(LocalContext.current)){
         MaterialTheme {
             var showContent by remember { mutableStateOf(false) }
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {

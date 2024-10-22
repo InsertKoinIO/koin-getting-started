@@ -19,7 +19,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.compose_multiplatform
 import org.koin.compose.KoinApplication
-import org.koin.compose.viewmodel.koinNavViewModel
+import org.koin.compose.viewmodel.koinViewModel
 import org.koin.sample.di.appModule
 
 @Composable
@@ -44,7 +44,7 @@ fun App() {
 @Composable
 fun MainScreen() {
     MaterialTheme {
-        val userViewModel = koinNavViewModel<UserViewModel>()
+        val userViewModel = koinViewModel<UserViewModel>()
         var showContent by remember { mutableStateOf(false) }
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Button(onClick = { showContent = !showContent }) {

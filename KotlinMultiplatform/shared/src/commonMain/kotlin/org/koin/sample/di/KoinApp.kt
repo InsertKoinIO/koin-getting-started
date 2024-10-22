@@ -1,16 +1,14 @@
 package org.koin.sample.di
 
-import org.koin.core.KoinApplication
 import org.koin.core.context.startKoin
-import org.koin.core.logger.Level
+import org.koin.dsl.KoinAppDeclaration
 
 fun initKoin(){
     startKoin(
-        koinConfiguration()
+        koinSharedConfiguration()
     )
 }
 
-fun koinConfiguration() : KoinApplication.() -> Unit = {
-    printLogger(Level.DEBUG)
+fun koinSharedConfiguration() : KoinAppDeclaration = {
     modules(appModule)
 }
