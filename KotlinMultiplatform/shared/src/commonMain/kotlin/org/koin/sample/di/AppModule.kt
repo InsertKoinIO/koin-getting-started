@@ -12,10 +12,3 @@ val appModule = module {
     singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
     factoryOf(::UserPresenter)
 }
-
-// Classical DSL version
-//val appModule = module {
-//    single<UserRepository> { UserRepositoryImpl() }
-//    factory { UserPresenter(get()) }
-//    viewModel { UserViewModel(get()) }
-//}

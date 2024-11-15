@@ -20,15 +20,13 @@ import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.compose_multiplatform
 import org.koin.compose.KoinApplication
 import org.koin.compose.viewmodel.koinViewModel
-import org.koin.sample.di.appModule
+import org.koin.sample.di.koinConfig
 
 @Composable
 @Preview
 fun App() {
     KoinApplication(
-        application = {
-            modules(appModule)
-        }
+        application = koinConfig
     ){
         val navController = rememberNavController()
         MaterialTheme {
