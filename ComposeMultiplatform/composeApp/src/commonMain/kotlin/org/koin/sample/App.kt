@@ -26,7 +26,7 @@ import org.koin.sample.di.koinConfig
 @Preview
 fun App() {
     KoinApplication(
-        application = koinConfig
+        application = koinConfig()
     ){
         val navController = rememberNavController()
         MaterialTheme {
