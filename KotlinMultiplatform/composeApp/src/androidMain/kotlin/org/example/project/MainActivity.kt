@@ -16,7 +16,7 @@ class MainActivity : ComponentActivity() {
 
         initKoin {
             androidContext(this@MainActivity)
-            androidLogger(Level.DEBUG)
+            androidLogger()
         }
 
         setContent {
