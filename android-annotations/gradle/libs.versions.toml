@@ -1,11 +1,11 @@
 [versions]
 
 agp = "8.5.2"
-kotlin = "2.0.20"
-koin = "4.0.0"
+kotlin = "2.0.21"
+koin = "4.0.2"
 android-appcompat = "1.7.0"
-koin-annotations = "2.0.0-Beta1"
-ksp = "2.0.20-1.0.25"
+koin-annotations = "2.0.0-RC1"
+ksp = "2.0.21-1.0.28"
 
 [libraries]
 android-appcompat = {module = "androidx.appcompat:appcompat", version.ref = "android-appcompat"}
