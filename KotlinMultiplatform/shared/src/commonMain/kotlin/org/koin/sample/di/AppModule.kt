@@ -7,8 +7,10 @@ import org.koin.dsl.module
 import org.koin.sample.UserPresenter
 import org.koin.sample.data.UserRepository
 import org.koin.sample.data.UserRepositoryImpl
+import org.koin.sample.getPlatform
 
 val appModule = module {
     singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
     factoryOf(::UserPresenter)
+    factory { getPlatform(this) }
 }
