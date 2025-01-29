@@ -10,7 +10,7 @@ struct ContentView: View {
                     showContent = !showContent
                 }
             }
-            
+
             if showContent {
                 let greet = KoinKt.getUserPresenter().sayHello(name: "Koin")
                 VStack(spacing: 16) {

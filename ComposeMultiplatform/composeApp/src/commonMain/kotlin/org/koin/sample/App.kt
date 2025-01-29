@@ -18,15 +18,15 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.compose_multiplatform
-import org.koin.compose.KoinApplication
+import org.koin.compose.KoinMultiplatformApplication
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.sample.di.koinConfig
 
 @Composable
 @Preview
 fun App() {
-    KoinApplication(
-        application = koinConfig()
+    KoinMultiplatformApplication(
+        config = koinConfig
     ){
         val navController = rememberNavController()
         MaterialTheme {
@@ -44,12 +44,22 @@ fun MainScreen() {
     MaterialTheme {
         val userViewModel = koinViewModel<UserViewModel>()
         var showContent by remember { mutableStateOf(false) }
+
+        val greeting by remember(showContent) {
+            derivedStateOf {
+                if (showContent) userViewModel.sayHello("Koin") else ""
+            }
+        }
+
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = { showContent = !showContent }) {
+            Button(
+                onClick = {
+                    showContent = !showContent
+                }
+            ) {
                 Text("Click me!")
             }
             AnimatedVisibility(showContent) {
-                val greeting = userViewModel.sayHello("Koin")
                 Column(
                     Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
