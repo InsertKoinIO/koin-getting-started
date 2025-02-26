@@ -1,18 +1,12 @@
 plugins {
-    alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.ksp)
 }
 
 android {
-    namespace = "org.koin.sample"
+    namespace = "org.koin.sample.library"
     compileSdk = 34
-    defaultConfig {
-        applicationId = "org.koin.sample"
-        minSdk = 24
-        versionCode = 1
-        versionName = "1.0"
-    }
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
@@ -37,6 +31,5 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.test)
     implementation(libs.koin.annotations)
-    implementation(project(":library"))
     ksp(libs.koin.ksp)
 }

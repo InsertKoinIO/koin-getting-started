@@ -4,7 +4,7 @@ agp = "8.5.2"
 kotlin = "2.0.21"
 koin = "4.0.2"
 android-appcompat = "1.7.0"
-koin-annotations = "2.0.0-RC1"
+koin-annotations = "2.0.0"
 ksp = "2.0.21-1.0.28"
 
 [libraries]
@@ -18,4 +18,5 @@ koin-ksp = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-an
 [plugins]
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
