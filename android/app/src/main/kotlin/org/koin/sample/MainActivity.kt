@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import org.koin.android.ext.android.inject
+import org.koin.androidx.scope.ScopeActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.sample.data.DefaultData
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : ScopeActivity() {
 
     private val presenter: UserPresenter by inject()
     private val viewModel : UserViewModel by viewModel()

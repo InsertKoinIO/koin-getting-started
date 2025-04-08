@@ -34,4 +34,4 @@ class AppModule
 
 @Module
 @ComponentScan("com.jetbrains.kmpapp.native")
-expect class NativeModule()
+class NativeModule()
