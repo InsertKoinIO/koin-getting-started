@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.activity.compose.setContent
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import org.koin.androidx.compose.KoinAndroidContext
 import org.koin.androidx.compose.koinViewModel
 import org.koin.compose.koinInject
 import org.koin.sample.data.DefaultData
@@ -22,9 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
-                KoinAndroidContext {
-                    App()
-                }
+                App()
             }
         }
     }

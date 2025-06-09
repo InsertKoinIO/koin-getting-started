@@ -15,28 +15,25 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.compose_multiplatform
-import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
 import org.koin.sample.UserPresenter
 
 @Composable
 @Preview
 fun App() {
-    KoinContext {
-        MaterialTheme {
-            var showContent by remember { mutableStateOf(false) }
-            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                Button(onClick = { showContent = !showContent }) {
-                    Text("Click me!")
-                }
-                AnimatedVisibility(showContent) {
+    MaterialTheme {
+        var showContent by remember { mutableStateOf(false) }
+        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+            Button(onClick = { showContent = !showContent }) {
+                Text("Click me!")
+            }
+            AnimatedVisibility(showContent) {
 
-                    val greeting = koinInject<UserPresenter>().sayHello("Koin")
+                val greeting = koinInject<UserPresenter>().sayHello("Koin")
 
-                    Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                        Image(painterResource(Res.drawable.compose_multiplatform), null)
-                        Text("Compose: $greeting")
-                    }
+                Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+                    Image(painterResource(Res.drawable.compose_multiplatform), null)
+                    Text("Compose: $greeting")
                 }
             }
         }

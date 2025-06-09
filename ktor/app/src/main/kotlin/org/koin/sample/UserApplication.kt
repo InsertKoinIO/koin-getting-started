@@ -1,7 +1,6 @@
 package org.koin.sample
 
 import io.ktor.server.application.*
-import io.ktor.server.engine.commandLineEnvironment
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.response.*
@@ -14,7 +13,9 @@ import org.koin.sample.service.UserService
 
 fun main(args: Array<String>) {
     // Start Ktor
-    embeddedServer(Netty, commandLineEnvironment(args)).start(wait = true)
+    embeddedServer(Netty, port = 8080) {
+        main()
+    }.start(wait = true)
 }
 
 fun Application.main() {

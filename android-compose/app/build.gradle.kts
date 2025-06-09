@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace = "org.koin.sample"
-    compileSdk = 34
+    compileSdk = 35
     defaultConfig {
         applicationId = "org.koin.sample"
         minSdk = 24
