@@ -1,8 +1,8 @@
-val koinVersion = "4.0.0"
-val ktorVersion = "2.3.12"
+val koinVersion = "4.1.0"
+val ktorVersion = "3.1.3"
 
 plugins {
-    val kotlinVersion = "2.0.20"
+    val kotlinVersion = "2.1.20"
     // Apply the Kotlin JVM plugin
     kotlin("jvm") version kotlinVersion
     // Apply the application plugin for CLI application support

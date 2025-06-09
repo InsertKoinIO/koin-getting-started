@@ -6,7 +6,6 @@ import org.koin.dsl.includes
 
 fun initKoin(config : KoinAppDeclaration? = null){
     startKoin {
-        printLogger()
         includes(config)
         modules(appModule)
     }

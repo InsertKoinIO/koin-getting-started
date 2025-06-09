@@ -18,19 +18,18 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.compose_multiplatform
-import org.koin.compose.KoinContext
 import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.annotation.KoinExperimentalAPI
 
+@OptIn(KoinExperimentalAPI::class)
 @Composable
 @Preview
 fun App() {
-    KoinContext {
-        val navController = rememberNavController()
-        MaterialTheme {
-            NavHost(navController = navController, startDestination = "home") {
-                composable("home") {
-                    MainScreen()
-                }
+    val navController = rememberNavController()
+    MaterialTheme {
+        NavHost(navController = navController, startDestination = "home") {
+            composable("home") {
+                MainScreen()
             }
         }
     }
