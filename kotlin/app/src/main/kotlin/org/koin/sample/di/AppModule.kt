@@ -3,18 +3,15 @@ package org.koin.sample.di
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
+import org.koin.sample.UserApplication
+import org.koin.sample.repository.UserRepository
+import org.koin.sample.repository.UserRepositoryImpl
 import org.koin.sample.service.UserService
-import org.koin.sample.data.UserRepository
-import org.koin.sample.data.UserRepositoryImpl
+import org.koin.sample.service.UserServiceImpl
 
 // Constructor DSL
 val appModule = module {
+    singleOf(::UserApplication)
     singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
-    singleOf(::UserService)
+    singleOf(::UserServiceImpl) { bind<UserService>() }
 }
-
-// Classic DSL
-//val appModule = module {
-//    single<UserRepository> { UserRepositoryImpl() }
-//    single { UserService(get()) }
-//}

@@ -12,7 +12,10 @@ interface UserRepository {
 }
 
 @Single
-class UserRepositoryImpl : UserRepository {
+class DataRepo()
+
+@Single
+class UserRepositoryImpl(val repo : DataRepo) : UserRepository {
 
     private val _users = arrayListOf<User>()
 

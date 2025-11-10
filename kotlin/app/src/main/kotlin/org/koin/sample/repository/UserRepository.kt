@@ -1,4 +1,6 @@
-package org.koin.sample.data
+package org.koin.sample.repository
+
+import org.koin.sample.data.User
 
 /**
  * Repository to provide a "Hello" data

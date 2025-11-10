@@ -1,8 +1,7 @@
 package org.koin.sample
 
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import org.koin.core.context.startKoin
+import org.koin.mp.KoinPlatform
 import org.koin.sample.di.appModule
 import org.koin.sample.service.UserService
 
@@ -10,12 +9,12 @@ import org.koin.sample.service.UserService
  * UserListApplication - Application Class
  * use UserRepository
  */
-class UserApplication : KoinComponent {
-
-    val userService: UserService by inject()
+class UserApplication(
+    private val userService: UserService
+) {
 
     init {
-        userService.saveDefaultUsers()
+        userService.loadDefaultUsers()
     }
 
     // display our data
@@ -34,5 +33,5 @@ fun main() {
         modules(appModule)
     }
 
-    UserApplication().sayHello()
+    KoinPlatform.getKoin().get<UserApplication>().sayHello()
 }

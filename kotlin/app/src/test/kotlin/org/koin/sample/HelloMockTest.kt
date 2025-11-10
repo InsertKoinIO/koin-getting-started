@@ -23,9 +23,7 @@ class HelloMockTest : KoinTest {
     }
 
     @get:Rule
-    val mockProvider = MockProviderRule.create { clazz ->
-        Mockito.mock(clazz.java)
-    }
+    val mockProvider = MockProviderRule.create { clazz -> Mockito.mock(clazz.java) }
 
     @Test
     fun `mock test`() {
@@ -33,8 +31,7 @@ class HelloMockTest : KoinTest {
             given(getDefaultUser()).willReturn(User("MOCK"))
         }
 
-        UserApplication().sayHello()
-
+        getKoin().get<UserApplication>().sayHello()
         Mockito.verify(service,times(1)).getDefaultUser()
     }
 }
