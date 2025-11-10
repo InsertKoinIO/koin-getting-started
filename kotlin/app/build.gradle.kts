@@ -3,11 +3,6 @@ plugins {
     application
 }
 
-repositories {
-    mavenCentral()
-    mavenLocal()
-}
-
 dependencies {
     // Koin dependencies
     implementation(libs.koin.core)
