@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "org.koin.sample"
-    compileSdk = 34
+    compileSdk = 36
     defaultConfig {
         applicationId = "org.koin.sample"
         minSdk = 24
@@ -29,5 +29,8 @@ android {
 dependencies {
     implementation(libs.android.appcompat)
     implementation(libs.koin.android)
-    implementation(libs.koin.test)
+
+    testImplementation(libs.koin.test)
+    testImplementation(libs.koin.android.test)
+    testImplementation(libs.mockito)
 }

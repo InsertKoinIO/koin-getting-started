@@ -1,31 +1,34 @@
 package org.koin.sample
 
 import android.app.Application
-import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
-import org.koin.core.logger.Level
-import org.koin.sample.data.DefaultData.DEFAULT_USERS
-import org.koin.sample.data.UserRepository
 import org.koin.sample.di.appModule
 
 /**
- * Main Application
+ * Application class that initializes Koin dependency injection framework.
+ *
+ * This class is responsible for starting Koin when the application launches,
+ * configuring it with the Android context and registering all dependency modules.
+ *
+ * Must be declared in AndroidManifest.xml as the application name.
  */
 class MainApplication : Application() {
 
-    private val userRepository : UserRepository by inject()
-
+    /**
+     * Called when the application is starting, before any activity, service,
+     * or receiver objects have been created.
+     *
+     * Initializes Koin with:
+     * - Android context for Android-specific features
+     * - Application module containing all dependency definitions
+     */
     override fun onCreate() {
         super.onCreate()
 
         startKoin {
             androidContext(this@MainApplication)
-            androidLogger(Level.DEBUG)
             modules(appModule)
         }
-
-        userRepository.addUsers(DEFAULT_USERS)
     }
 }

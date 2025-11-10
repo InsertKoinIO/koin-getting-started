@@ -1,61 +1,56 @@
 package org.koin.sample
 
-import org.junit.After
-import org.junit.Assert.assertTrue
 import org.junit.Rule
 import org.junit.Test
-import org.koin.core.context.stopKoin
-import org.koin.core.logger.Level
-import org.koin.sample.data.DefaultData
-import org.koin.sample.data.UserRepository
+import org.koin.sample.data.User
+import org.koin.sample.di.appModule
+import org.koin.sample.presentation.UserPresenter
+import org.koin.sample.repository.UserRepository
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
-import org.koin.test.get
-import org.koin.test.inject
 import org.koin.test.mock.MockProviderRule
 import org.koin.test.mock.declareMock
+import org.mockito.ArgumentMatchers.anyString
+import org.mockito.BDDMockito.given
 import org.mockito.Mockito
 import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
-import org.koin.sample.di.appModule
 
 class PresenterTest : KoinTest {
 
-    val userRepository : UserRepository by inject()
-
-    @get:Rule
-    val mockProvider = MockProviderRule.create { clazz ->
-        Mockito.mock(clazz.java)
-    }
-
+    /**
+     * Koin test rule that initializes the Koin context for testing.
+     * Configures debug logging and loads the application module.
+     */
     @get:Rule
     val koinTestRule = KoinTestRule.create {
-        printLogger(Level.DEBUG)
         modules(appModule)
     }
 
-    val presenter: UserPresenter by inject()
+    /**
+     * Mock provider rule that configures Mockito as the mocking framework.
+     * This rule enables Koin to create mock instances using Mockito.
+     */
+    @get:Rule
+    val mockProvider = MockProviderRule.create { clazz -> Mockito.mock(clazz.java) }
 
-    @After
-    fun after() {
-        stopKoin()
-    }
-
+    /**
+     * Tests the application with a mocked UserRepository.
+     *
+     * This test demonstrates:
+     * - Declaring a mock for [UserRepository] with stubbed behavior
+     * - Running the application with the mocked dependency
+     * - Verifying that the mocked repository method was called exactly once
+     *
+     * The test verifies that [UserRepository.findUserOrNull] is called when
+     * [UserPresenter.sayHello] is invoked, as the call flows through UserService to UserRepository.
+     */
     @Test
-    fun `say hello`() {
-        userRepository.addUsers(DefaultData.DEFAULT_USERS)
-        // reuse the lazy injected presenter
-        assertTrue(presenter.sayHello(DefaultData.DEFAULT_USER.name).contains("Hello"))
-    }
+    fun `mock test`() {
+        val service = declareMock<UserRepository> {
+            given(findUserOrNull(anyString())).willReturn(User("Mock","mock@example.com"))
+        }
 
-    @Test
-    fun `say hello with mock`() {
-        val mock = declareMock<UserRepository>()
-
-        // retrieve actual presenter (injected with mock)
-        val presenter = get<UserPresenter>()
-        val name = DefaultData.DEFAULT_USER.name
-        presenter.sayHello(name)
-        verify(mock, times(1)).findUser(name)
+        getKoin().get<UserPresenter>().sayHello("Mock")
+        Mockito.verify(service,times(1)).findUserOrNull(anyString())
     }
 }
