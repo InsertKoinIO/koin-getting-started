@@ -5,11 +5,24 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.koin.core.annotation.KoinApplication
+import org.koin.dsl.includes
+import org.koin.ksp.generated.koinConfiguration
+import org.koin.ksp.generated.startKoin
 import org.koin.ktor.ext.inject
 import org.koin.ktor.plugin.Koin
-import org.koin.logger.slf4jLogger
-import org.koin.sample.di.appModule
 import org.koin.sample.service.UserService
+
+/**
+ * Koin application configuration object.
+ *
+ * This object is annotated with [@KoinApplication] to mark it as the entry point
+ * for Koin's annotation-based configuration. The Koin KSP (Kotlin Symbol Processing)
+ * processor generates a [startKoin] extension function for this object, which
+ * initializes the Koin dependency injection container with all discovered components.
+ */
+@KoinApplication
+object KoinUserApplication
 
 /**
  * Application entry point that starts the Ktor server.
@@ -35,9 +48,10 @@ fun main(args: Array<String>) {
  * - HTTP routing endpoints
  */
 fun Application.main() {
+
     // Configure Koin dependency injection
-    install(Koin) {
-        modules(appModule)
+    install(Koin){
+        includes(KoinUserApplication.koinConfiguration())
     }
 
     // Inject UserService and initialize with default users
