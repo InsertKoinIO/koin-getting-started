@@ -17,4 +17,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "KoinAndroidAnnotationsApp"
-include(":app", ":library")
+include(":app")
