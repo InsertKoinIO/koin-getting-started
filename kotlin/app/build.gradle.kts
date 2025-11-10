@@ -1,10 +1,5 @@
-val koinVersion = "4.1.0"
-
 plugins {
-    val kotlinVersion = "2.1.20"
-    // Apply the Kotlin JVM plugin
-    kotlin("jvm") version kotlinVersion
-    // Apply the application plugin for CLI application support
+    alias(libs.plugins.kotlinJvm)
     application
 }
 
@@ -15,16 +10,16 @@ repositories {
 
 dependencies {
     // Koin dependencies
-    implementation("io.insert-koin:koin-core:$koinVersion")
+    implementation(libs.koin.core)
     // Koin testing
-    testImplementation("io.insert-koin:koin-test:$koinVersion")
-    testImplementation("io.insert-koin:koin-test-junit4:$koinVersion")
-    testImplementation("org.mockito:mockito-inline:4.8.0")
+    testImplementation(libs.koin.test)
+    testImplementation(libs.koin.test.junit)
+    testImplementation(libs.mockito)
 }
 
 application {
     // Define the main class for the application
-    mainClass.set("org.koin.sample.UserApplication")
+    mainClass.set("org.koin.sample.UserApplicationKt")
 }
 
 java {

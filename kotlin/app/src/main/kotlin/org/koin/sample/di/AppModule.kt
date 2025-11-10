@@ -9,7 +9,17 @@ import org.koin.sample.repository.UserRepositoryImpl
 import org.koin.sample.service.UserService
 import org.koin.sample.service.UserServiceImpl
 
-// Constructor DSL
+/**
+ * Main Koin dependency injection module for the application.
+ *
+ * This module defines all application dependencies using Koin's Constructor DSL:
+ * - [UserApplication] - The main application class (singleton)
+ * - [UserRepositoryImpl] - Repository implementation bound to [UserRepository] interface (singleton)
+ * - [UserServiceImpl] - Service implementation bound to [UserService] interface (singleton)
+ *
+ * All dependencies are created as singletons to ensure a single instance
+ * throughout the application lifecycle.
+ */
 val appModule = module {
     singleOf(::UserApplication)
     singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
