@@ -17,6 +17,14 @@ import org.mockito.Mockito
 import org.mockito.Mockito.times
 import kotlin.jvm.java
 
+/**
+ * Test class for [UserPresenter] demonstrating Koin testing capabilities.
+ *
+ * This test class showcases:
+ * - Using [KoinTestRule] to initialize Koin for testing
+ * - Mocking dependencies with [MockProviderRule] and Mockito
+ * - Testing dependency injection with mocked repositories
+ */
 class PresenterTest : KoinTest {
 
     /**
