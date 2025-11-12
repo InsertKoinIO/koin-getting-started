@@ -24,10 +24,7 @@ import org.koin.dsl.includes
 import org.koin.dsl.module
 import org.koin.mp.KoinPlatform
 
-expect val nativeContextModule : Module
-
 val nativeComponentModule = module {
-    includes(nativeContextModule)
     singleOf(::NativeComponent)
 }
 
