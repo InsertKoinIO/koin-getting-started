@@ -53,10 +53,9 @@ import org.koin.compose.viewmodel.koinViewModel
 @Composable
 fun DetailScreen(
     objectId: Int,
+    viewModel: DetailViewModel = koinViewModel(),
     navigateBack: () -> Unit,
 ) {
-    val viewModel = koinViewModel<DetailViewModel>()
-
     val obj by viewModel.getObject(objectId).collectAsStateWithLifecycle(initialValue = null)
     AnimatedContent(obj != null) { objectAvailable ->
         if (objectAvailable) {

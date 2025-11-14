@@ -32,11 +32,10 @@ import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun ListScreen(
+    viewModel : ListViewModel = koinViewModel(),
     navigateToDetails: (objectId: Int) -> Unit
 ) {
-    val viewModel = koinViewModel<ListViewModel>()
     val objects by viewModel.objects.collectAsStateWithLifecycle()
-
     AnimatedContent(objects.isNotEmpty()) { objectsAvailable ->
         if (objectsAvailable) {
             ObjectGrid(

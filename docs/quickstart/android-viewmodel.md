@@ -31,34 +31,65 @@ dependencies {
 
 The idea of the application is to manage a list of users, and display it in our `MainActivity` class with a Presenter or a ViewModel:
 
-> Users -> UserRepository -> (Presenter or ViewModel) -> MainActivity
+> Users -> UserRepository -> UserService -> (Presenter or ViewModel) -> MainActivity
 
 ## The "User" Data
 
-We will manage a collection of Users. Here is the data class: 
+We will manage a collection of Users. Here is the data class:
 
 ```kotlin
-data class User(val name : String)
+data class User(val name: String, val email: String)
 ```
 
 We create a "Repository" component to manage the list of users (add users or find one by name). Here below, the `UserRepository` interface and its implementation:
 
 ```kotlin
 interface UserRepository {
-    fun findUser(name : String): User?
-    fun addUsers(users : List<User>)
+    fun findUserOrNull(name: String): User?
+    fun addUsers(users: List<User>)
 }
 
 class UserRepositoryImpl : UserRepository {
 
     private val _users = arrayListOf<User>()
 
-    override fun findUser(name: String): User? {
+    override fun findUserOrNull(name: String): User? {
         return _users.firstOrNull { it.name == name }
     }
 
-    override fun addUsers(users : List<User>) {
+    override fun addUsers(users: List<User>) {
         _users.addAll(users)
+    }
+}
+```
+
+## The UserService Component
+
+Let's write a service component to manage user operations:
+
+```kotlin
+interface UserService {
+    fun getUserOrNull(name: String): User?
+    fun loadUsers()
+    fun prepareHelloMessage(user: User?): String
+}
+
+class UserServiceImpl(
+    private val userRepository: UserRepository
+) : UserService {
+
+    override fun getUserOrNull(name: String): User? = userRepository.findUserOrNull(name)
+
+    override fun loadUsers() {
+        userRepository.addUsers(listOf(
+            User("Alice", "alice@example.com"),
+            User("Bob", "bob@example.com"),
+            User("Charlie", "charlie@example.com")
+        ))
+    }
+
+    override fun prepareHelloMessage(user: User?): String {
+        return user?.let { "Hello '${user.name}' (${user.email})! 👋" } ?: "❌ User not found"
     }
 }
 ```
@@ -69,15 +100,16 @@ Use the `module` function to declare a Koin module. A Koin module is the place w
 
 ```kotlin
 val appModule = module {
-    
+
 }
 ```
 
-Let's declare our first component. We want a singleton of `UserRepository`, by creating an instance of `UserRepositoryImpl`
+Let's declare our components. We want singletons of `UserRepository` and `UserService`:
 
 ```kotlin
 val appModule = module {
-   singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
+    singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
+    singleOf(::UserServiceImpl) { bind<UserService>() }
 }
 ```
 
@@ -86,22 +118,24 @@ val appModule = module {
 Let's write a ViewModel component to display a user:
 
 ```kotlin
-class UserViewModel(private val repository: UserRepository) : ViewModel() {
+class UserViewModel(private val userService: UserService) : ViewModel() {
 
-    fun sayHello(name : String) : String{
-        val foundUser = repository.findUser(name)
-        return foundUser?.let { "Hello '$it' from $this" } ?: "User '$name' not found!"
+    fun sayHello(name: String): String {
+        val user = userService.getUserOrNull(name)
+        val message = userService.prepareHelloMessage(user)
+        return "[UserViewModel] $message"
     }
 }
 ```
 
-> UserRepository is referenced in UserViewModel`s constructor
+> UserService is referenced in UserViewModel's constructor
 
 We declare `UserViewModel` in our Koin module. We declare it as a `viewModelOf` definition, to not keep any instance in memory (avoid any leak with Android lifecycle):
 
 ```kotlin
 val appModule = module {
     singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
+    singleOf(::UserServiceImpl) { bind<UserService>() }
     viewModelOf(::UserViewModel)
 }
 ```
@@ -109,7 +143,7 @@ val appModule = module {
 
 ## Injecting ViewModel in Android
 
-The `UserViewModel` component will be created, resolving the `UserRepository` instance with it. To get it into our Activity, let's inject it with the `by viewModel()` delegate function: 
+The `UserViewModel` component will be created, resolving the `UserService` instance with it. To get it into our Activity, let's inject it with the `by viewModel()` delegate function: 
 
 ```kotlin
 class MainActivity : AppCompatActivity() {
@@ -154,12 +188,13 @@ The `modules()` function in `startKoin` load the given list of modules
 
 ## Koin module: classic or constructor DSL?
 
-Here is the Koin moduel declaration for our app:
+Here is the Koin module declaration for our app:
 
 ```kotlin
 val appModule = module {
-    single<HelloRepository> { HelloRepositoryImpl() }
-    viewModel { MyViewModel(get()) }
+    single<UserRepository> { UserRepositoryImpl() }
+    single<UserService> { UserServiceImpl(get()) }
+    viewModel { UserViewModel(get()) }
 }
 ```
 
@@ -168,6 +203,7 @@ We can write it in a more compact way, by using constructors:
 ```kotlin
 val appModule = module {
     singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
+    singleOf(::UserServiceImpl) { bind<UserService>() }
     viewModelOf(::UserViewModel)
 }
 ```
