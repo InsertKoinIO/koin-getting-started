@@ -4,7 +4,7 @@ agp = "8.13.0"
 kotlin = "2.2.21"
 koin = "4.1.1"
 android-appcompat = "1.7.1"
-koin-annotations = "2.3.1"
+koin-annotations = "2.3.2-Beta1"
 ksp = "2.3.2"
 mockito = "5.2.0"
 
