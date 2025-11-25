@@ -1,5 +1,6 @@
 package org.koin.sample.service
 
+import org.koin.core.annotation.Singleton
 import org.koin.sample.data.DEFAULT_USER
 import org.koin.sample.data.DEFAULT_USERS
 import org.koin.sample.data.User
@@ -37,6 +38,7 @@ interface UserService {
  *
  * @property userRepository The repository used for user data persistence
  */
+@Singleton
 class UserServiceImpl(
     private val userRepository: UserRepository
 ) : UserService {

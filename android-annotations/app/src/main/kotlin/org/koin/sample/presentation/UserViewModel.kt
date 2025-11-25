@@ -1,6 +1,7 @@
 package org.koin.sample.presentation
 
 import androidx.lifecycle.ViewModel
+import org.koin.android.annotation.KoinViewModel
 import org.koin.sample.service.UserService
 
 /**
@@ -11,6 +12,7 @@ import org.koin.sample.service.UserService
  *
  * @property userService The service layer for user operations
  */
+@KoinViewModel
 class UserViewModel(
     private val userService: UserService
 ) : ViewModel() {

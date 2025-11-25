@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Koin Sample App</string>
     <string name="hello_messages">%1$s\n%2$s</string>
+    <string name="hello_message">%1$s</string>
 </resources>

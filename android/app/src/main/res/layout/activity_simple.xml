@@ -4,22 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:id="@+id/background"
+    android:padding="16dp"
     tools:context="org.koin.sample.MainActivity">
 
+    <EditText
+        android:id="@+id/nameInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter name"
+        android:inputType="textPersonName"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/sayHelloButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Say Hello"
+        android:layout_marginBottom="16dp"/>
 
     <TextView
         android:id="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="TextView"
+        android:text=""
         android:textSize="16sp"
-        android:gravity="center"
-        android:layout_gravity="center"
-    />
+        android:gravity="center"/>
 
 </LinearLayout>

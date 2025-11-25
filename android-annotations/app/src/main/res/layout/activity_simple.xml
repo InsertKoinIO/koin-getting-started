@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:id="@+id/background"
     android:padding="16dp"
-    tools:context="org.koin.sample.view.presenter.MySimpleActivity">
+    tools:context="org.koin.sample.MainActivity">
 
     <EditText
         android:id="@+id/nameInput"

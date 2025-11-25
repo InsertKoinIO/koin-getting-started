@@ -1,28 +1,28 @@
 package org.koin.sample
 
 import android.app.Application
-import org.koin.sample.repository.UserRepository
-import org.koin.sample.repository.UserRepositoryImpl
-import org.koin.sample.service.UserService
-import org.koin.sample.service.UserServiceImpl
-// import org.koin.ksp.generated.*
+import org.koin.core.annotation.KoinApplication
+import org.koin.ksp.generated.startKoin
 
+/**
+ * Main Application class for the Koin Annotations sample app.
+ *
+ * This class uses [@KoinApplication] annotation which automatically:
+ * - Discovers all modules annotated with [@Module] and [@Configuration]
+ * - Generates the necessary Koin configuration at compile-time via KSP
+ * - Loads all modules without requiring manual `modules()` declaration
+ *
+ * The [startKoin] block only needs to configure Android-specific settings
+ * like [androidContext]. All module loading is handled automatically by the
+ * [@KoinApplication] annotation processor.
+ */
+@KoinApplication
 class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        // Generated in MainApplication
+        startKoin()
     }
-}
-
-// Manual DI container
-object DI {
-
-    // UserRepository Impl
-    // - Manage all Users data
-    val userRepository : UserRepository = UserRepositoryImpl()
-
-    // UserServiceImpl -> UserRepository
-    // - Find User by name
-    // - Format Message for given user
-    val userService : UserService = UserServiceImpl(userRepository)
 }

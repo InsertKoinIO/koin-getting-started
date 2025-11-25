@@ -1,11 +1,15 @@
 package org.koin.sample
 
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.sample.presentation.UserPresenter
 import org.koin.sample.presentation.UserViewModel
 
 /**
@@ -20,36 +24,22 @@ import org.koin.sample.presentation.UserViewModel
  */
 class MainActivity : AppCompatActivity() {
 
-    /**
-     * UserPresenter injected using Koin's inject() delegate.
-     * Creates a new instance each time (factory scope).
-     */
-    private val presenter: UserPresenter by inject()
-
-    /**
-     * UserViewModel injected using Koin's viewModel() delegate.
-     * Lifecycle-aware and survives configuration changes.
-     */
     private val viewModel : UserViewModel by viewModel()
 
-    /**
-     * Initializes the activity and displays greeting messages from both
-     * the Presenter and ViewModel to demonstrate both injection approaches.
-     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_simple)
+        title = "Koin Annotations Sample"
 
-        title = "MySimpleActivity"
+        val nameInput = findViewById<EditText>(R.id.nameInput)
+        val sayHelloButton = findViewById<Button>(R.id.sayHelloButton)
         val textField = findViewById<TextView>(R.id.text)
 
-        val defaultName = "Alice"
-
-        // Get greeting messages from both presentation components
-        val helloFromPresenter = presenter.sayHello(defaultName)
-        val helloFromViewModel = viewModel.sayHello(defaultName)
-
-        // Display both messages using a string resource
-        textField.text = getString(R.string.hello_messages, helloFromPresenter, helloFromViewModel)
+        // Set up button click listener to get user input and display greeting
+        sayHelloButton.setOnClickListener {
+            val userName = nameInput.text.toString().trim().ifEmpty { "Alice" }
+            val helloFromViewModel = viewModel.sayHello(userName)
+            textField.text = getString(R.string.hello_message, helloFromViewModel)
+        }
     }
 }

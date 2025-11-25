@@ -1,6 +1,7 @@
 package org.koin.sample.repository
 
 import org.koin.core.annotation.Single
+import org.koin.core.annotation.Singleton
 import org.koin.sample.data.User
 
 /**
@@ -28,6 +29,7 @@ interface UserRepository {
  * Implementation of [UserRepository] that stores users in memory.
  * Uses an ArrayList to maintain the collection of users.
  */
+@Singleton
 class UserRepositoryImpl : UserRepository {
     /**
      * Internal mutable list of users stored in memory.

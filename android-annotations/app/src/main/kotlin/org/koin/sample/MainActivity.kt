@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.sample.presentation.UserViewModel
 
 /**
@@ -23,14 +24,7 @@ import org.koin.sample.presentation.UserViewModel
  */
 class MainActivity : AppCompatActivity() {
 
-    private val viewModel : UserViewModel by viewModels {
-        // You define how to build the ViewModel here
-        object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return UserViewModel(DI.userService) as T
-            }
-        }
-    }
+    private val viewModel : UserViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
