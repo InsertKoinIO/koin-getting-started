@@ -38,7 +38,6 @@ interface UserService {
  *
  * @property userRepository The repository used for user data persistence
  */
-@Single
 class UserServiceImpl(
     private val userRepository: UserRepository
 ) : UserService {

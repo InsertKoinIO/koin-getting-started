@@ -28,7 +28,6 @@ interface UserRepository {
  * Implementation of [UserRepository] that stores users in memory.
  * Uses an ArrayList to maintain the collection of users.
  */
-@Single
 class UserRepositoryImpl : UserRepository {
     /**
      * Internal mutable list of users stored in memory.
