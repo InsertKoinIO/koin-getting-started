@@ -3,6 +3,7 @@ package com.jetbrains.kmpapp.di
 import com.jetbrains.kmpapp.di.DataModule
 import com.jetbrains.kmpapp.native.NativeComponent
 import com.jetbrains.kmpapp.native.NativeComponentModule
+import com.jetbrains.kmpapp.native.NativeContextComponent
 import com.jetbrains.kmpapp.screens.ViewModelModule
 import org.koin.core.annotation.Configuration
 import org.koin.core.annotation.KoinApplication
@@ -34,8 +35,11 @@ fun initKoin(configuration : KoinAppDeclaration? = null) {
     }
 
     val nativeComponent = KoinPlatform.getKoin().get<NativeComponent>().getInfo()
-    println("-- Expect/Actual Definition -- Running on: $nativeComponent")
+    println("-- NativeComponent -- Running on: $nativeComponent")
 
     val platformInfo = KoinPlatform.getKoin().get<PlatformComponent>().getInfo()
-    println("-- Expect/Actual Module's + Interface Definition -- Running on: $platformInfo")
+    println("-- PlatformComponent -- Running on: $platformInfo")
+
+    val platformContext = KoinPlatform.getKoin().get<NativeContextComponent>()
+    println("-- platformContext - Interface Definition -- Running on: ${platformContext.getInfo()}")
 }
