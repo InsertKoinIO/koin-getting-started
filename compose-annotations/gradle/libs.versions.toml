@@ -1,17 +1,16 @@
 [versions]
-agp = "8.13.1"
-androidx-activityCompose = "1.11.0"
-androidx-ui-tooling = "1.9.4"
+agp = "8.13.2"
+androidx-activityCompose = "1.12.2"
+androidx-ui-tooling = "1.10.0"
 coil = "3.3.0"
 compose-multiplatform = "1.9.3"
-koin = "4.1.1"
-koin-annotations = "2.3.1"
-kotlin = "2.2.21"
-ktor = "3.3.2"
+kotlin = "2.3.20-Beta1"
+koin = "4.2.0-beta3-plugin-rc5"
+koin-plugin = "0.1.37"
+ktor = "3.3.3"
 materialIconsCore = "1.7.3"
 navigationCompose = "2.9.1"
 lifecycleCompose = "2.9.6"
-ksp = "2.3.2"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -21,8 +20,7 @@ coil-compose = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref 
 coil-network-ktor = { group = "io.coil-kt.coil3", name = "coil-network-ktor3", version.ref = "coil" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
-koin-annotations = {module = "io.insert-koin:koin-annotations", version.ref = "koin-annotations"}
-koin-ksp-compiler = {module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-annotations"}
+koin-annotations = {module = "io.insert-koin:koin-annotations", version.ref = "koin"}
 ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-client-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
@@ -34,8 +32,9 @@ navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-co
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinxSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+koinPlugin = { id = "io.insert-koin.compiler.plugin", version.ref = "koin-plugin" }

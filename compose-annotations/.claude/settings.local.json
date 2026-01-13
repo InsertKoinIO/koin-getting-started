@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "Bash(./gradlew build:*)",
+      "Bash(./gradlew dependencies:*)",
+      "Bash(./gradlew:*)"
     ],
     "deny": [],
     "ask": []

@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_simple)
-        title = "Koin Annotations Sample"
+        title = "Koin DSL Sample"
 
         val nameInput = findViewById<EditText>(R.id.nameInput)
         val sayHelloButton = findViewById<Button>(R.id.sayHelloButton)

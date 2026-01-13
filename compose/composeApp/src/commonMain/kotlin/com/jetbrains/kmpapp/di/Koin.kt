@@ -1,6 +1,5 @@
 package com.jetbrains.kmpapp.di
 
-import androidx.navigation.NavBackStackEntry
 import com.jetbrains.kmpapp.data.InMemoryMuseumStorage
 import com.jetbrains.kmpapp.data.KtorMuseumApi
 import com.jetbrains.kmpapp.data.MuseumApi
@@ -14,28 +13,27 @@ import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.http.ContentType
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
-import org.koin.core.annotation.KoinInternalApi
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
-import org.koin.core.module.KoinDslMarker
 import org.koin.core.module.Module
-import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.createdAtStart
-import org.koin.core.module.dsl.factoryOf
-import org.koin.core.module.dsl.singleOf
-import org.koin.core.module.dsl.viewModelOf
-import org.koin.core.qualifier.TypeQualifier
+import org.koin.core.module.dsl.withOptions
 import org.koin.dsl.KoinAppDeclaration
-import org.koin.dsl.ScopeDSL
+import org.koin.dsl.bind
 import org.koin.dsl.includes
 import org.koin.dsl.module
-import org.koin.module.dsl.navigationScope
 import org.koin.mp.KoinPlatform
-import kotlin.uuid.ExperimentalUuidApi
-import kotlin.uuid.Uuid
+import org.koin.plugin.module.dsl.single
+import org.koin.plugin.module.dsl.viewModel
+
+interface PlatformComponent {
+    fun getInfo(): String
+}
+
+expect fun platformModule() : Module
 
 val nativeComponentModule = module {
-    singleOf(::NativeComponent)
+    single<NativeComponent>()
 }
 
 val dataModule = module {
@@ -49,40 +47,30 @@ val dataModule = module {
         }
     }
 
-    singleOf(::KtorMuseumApi){ bind<MuseumApi>() }
-    singleOf(::InMemoryMuseumStorage){ bind<MuseumStorage>() }
-    singleOf(::MuseumRepository){
-        createdAtStart()
-    }
-}
-
-class ScopedData {
-    @OptIn(ExperimentalUuidApi::class)
-    val id : String = Uuid.random().toString()
+    single<KtorMuseumApi>() bind MuseumApi::class
+    single<InMemoryMuseumStorage>() bind MuseumStorage::class
+    single<MuseumRepository>() withOptions { createdAtStart() }
 }
 
 val viewModelModule = module {
-    viewModelOf(::ListViewModel)
-    viewModelOf(::DetailViewModel)
-
-    navigationScope {
-        scoped { ScopedData() }
-    }
+    viewModel<ListViewModel>()
+    viewModel<DetailViewModel>()
 }
 
 val appModule = module {
-    includes(dataModule,viewModelModule, nativeComponentModule)
+    includes(dataModule, viewModelModule, nativeComponentModule, platformModule())
 }
 
-fun initKoin(configuration : KoinAppDeclaration? = null) {
+fun initKoin(configuration: KoinAppDeclaration? = null) {
     startKoin {
         includes(configuration)
-        modules(
-            appModule
-        )
+        modules(appModule)
         printLogger(Level.DEBUG)
     }
 
-    val platformInfo = KoinPlatform.getKoin().get<NativeComponent>().getInfo()
-    println("Running on: $platformInfo")
+    val nativeComponent = KoinPlatform.getKoin().get<NativeComponent>().getInfo()
+    println("-- Expect/Actual Definition -- Running on: $nativeComponent")
+
+    val platformInfo = KoinPlatform.getKoin().get<PlatformComponent>().getInfo()
+    println("-- Expect/Actual Module's + Interface Definition -- Running on: $platformInfo")
 }

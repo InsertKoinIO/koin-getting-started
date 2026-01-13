@@ -1,7 +1,7 @@
 package org.koin.sample.presentation
 
 import androidx.lifecycle.ViewModel
-import org.koin.android.annotation.KoinViewModel
+import org.koin.core.annotation.KoinViewModel
 import org.koin.sample.service.UserService
 
 /**

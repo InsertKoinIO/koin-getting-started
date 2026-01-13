@@ -3,6 +3,6 @@ package com.jetbrains.kmpapp.native
 import org.koin.core.annotation.Single
 
 @Single
-expect class PlatformComponent() {
+expect class NativeComponent() {
     fun getInfo() : String
 }

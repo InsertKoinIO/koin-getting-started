@@ -1,7 +1,8 @@
 package org.koin.sample.di
 
-import org.koin.core.module.dsl.bind
-import org.koin.core.module.dsl.singleOf
+import org.koin.core.module.dsl.plugin.create
+import org.koin.core.module.dsl.plugin.single
+import org.koin.dsl.bind
 import org.koin.dsl.module
 import org.koin.sample.UserApplication
 import org.koin.sample.repository.UserRepository
@@ -21,7 +22,7 @@ import org.koin.sample.service.UserServiceImpl
  * throughout the application lifecycle.
  */
 val appModule = module {
-    singleOf(::UserApplication)
-    singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
-    singleOf(::UserServiceImpl) { bind<UserService>() }
+    single<UserApplication>()
+    single<UserRepository> { create(::UserRepositoryImpl) }
+    single<UserServiceImpl>() bind UserService::class
 }

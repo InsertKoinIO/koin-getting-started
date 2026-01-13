@@ -2,7 +2,7 @@ package org.koin.sample
 
 import android.app.Application
 import org.koin.core.annotation.KoinApplication
-import org.koin.ksp.generated.startKoin
+import org.koin.plugin.module.dsl.startKoin
 
 /**
  * Main Application class for the Koin Annotations sample app.
@@ -22,7 +22,7 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        // Generated in MainApplication
-        startKoin()
+        // Just start Koin!
+        startKoin<MainApplication>()
     }
 }
