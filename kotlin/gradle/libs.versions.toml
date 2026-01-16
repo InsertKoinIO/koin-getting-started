@@ -1,12 +1,11 @@
 [versions]
-kotlin = "2.2.21"
-koin-plugin = "0.1.0-SNAPSHOT"
-koin = "4.1.1"
+kotlin = "2.3.20-Beta1"
+koin = "4.2.0-beta3"
+koin-plugin = "0.2.3"
 mockito = "4.8.0"
 
 [libraries]
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
-koin-plugin-support = { module = "io.insert-koin:plugin-support", version.ref = "koin-plugin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 koin-test-junit = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
 mockito = {module = "org.mockito:mockito-inline", version.ref = "mockito"}

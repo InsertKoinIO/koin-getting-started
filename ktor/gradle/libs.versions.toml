@@ -1,7 +1,8 @@
 [versions]
-kotlin = "2.2.21"
 ktor = "3.3.2"
-koin = "4.1.1"
+kotlin = "2.3.20-Beta1"
+koin = "4.2.0-beta3"
+koin-plugin = "0.2.3"
 mockito = "4.8.0"
 
 logback = "1.4.12"
@@ -18,3 +19,4 @@ mockito = {module = "org.mockito:mockito-inline", version.ref = "mockito"}
 
 [plugins]
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+koin-plugin = { id  = "io.insert-koin.compiler.plugin", version.ref = "koin-plugin" }

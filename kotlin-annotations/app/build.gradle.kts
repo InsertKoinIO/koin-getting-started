@@ -1,15 +1,13 @@
 plugins {
     alias(libs.plugins.kotlinJvm)
-    alias(libs.plugins.ksp)
     application
+    alias(libs.plugins.koin.plugin)
 }
 
 dependencies {
     // Koin dependencies
     implementation(libs.koin.core)
     implementation(libs.koin.annotations)
-    implementation(libs.koin.jsr330)
-    ksp(libs.koin.ksp)
 
     // Koin testing
     testImplementation(libs.koin.test)
@@ -20,10 +18,6 @@ dependencies {
 application {
     // Define the main class for the application
     mainClass.set("org.koin.sample.UserApplicationKt")
-}
-
-ksp {
-    arg("KOIN_CONFIG_CHECK", "true")
 }
 
 java {

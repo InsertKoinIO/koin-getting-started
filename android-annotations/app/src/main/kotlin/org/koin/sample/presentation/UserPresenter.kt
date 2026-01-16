@@ -1,6 +1,5 @@
 package org.koin.sample.presentation
 
-import org.koin.core.annotation.Scoped
 import org.koin.core.annotation.ViewModelScope
 import org.koin.sample.service.UserService
 

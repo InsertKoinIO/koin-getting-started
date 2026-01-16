@@ -1,9 +1,13 @@
 package org.koin.sample
 
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.koin.core.context.stopKoin
 import org.koin.dsl.includes
-import org.koin.ksp.generated.koinConfiguration
+import org.koin.plugin.module.dsl.koinApplication
+import org.koin.plugin.module.dsl.startKoin
 import org.koin.sample.data.User
 import org.koin.sample.repository.UserRepository
 import org.koin.test.KoinTest
@@ -29,9 +33,14 @@ class HelloMockTest : KoinTest {
      * Koin test rule that initializes the Koin context for testing.
      * Configures debug logging and loads the application module.
      */
-    @get:Rule
-    val koinTestRule = KoinTestRule.create {
-        includes(KoinUserApplication.koinConfiguration())
+    @Before
+    fun before(){
+        startKoin<KoinUserApplication>()
+    }
+
+    @After
+    fun after(){
+        stopKoin()
     }
 
     /**

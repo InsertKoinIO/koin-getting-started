@@ -1,9 +1,8 @@
 [versions]
-kotlin = "2.2.21"
 ktor = "3.3.2"
-koin = "4.1.1"
-koin-annotations = "2.3.1"
-ksp = "2.3.2"
+kotlin = "2.3.20-Beta1"
+koin = "4.2.0-beta3"
+koin-plugin = "0.2.3"
 
 mockito = "4.8.0"
 
@@ -17,14 +16,10 @@ koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin" }
 koin-ktor-slf4j = { module = "io.insert-koin:koin-logger-slf4j", version.ref = "koin" }
 koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
 koin-test-junit = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
-
-koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koin-annotations" }
-koin-jsr330 = { module = "io.insert-koin:koin-jsr330", version.ref = "koin-annotations" }
-koin-ksp = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-annotations" }
+koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koin" }
 
 mockito = {module = "org.mockito:mockito-inline", version.ref = "mockito"}
 
-
 [plugins]
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-ksp = {id = "com.google.devtools.ksp", version.ref = "ksp"}
+koin-plugin = { id  = "io.insert-koin.compiler.plugin", version.ref = "koin-plugin" }

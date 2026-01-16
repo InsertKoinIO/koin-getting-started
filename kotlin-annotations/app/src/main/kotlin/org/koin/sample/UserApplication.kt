@@ -1,9 +1,10 @@
 package org.koin.sample
 
-import jakarta.inject.Singleton
 import org.koin.core.annotation.KoinApplication
-import org.koin.ksp.generated.startKoin
+import org.koin.core.annotation.Singleton
+import org.koin.core.context.startKoin
 import org.koin.mp.KoinPlatform
+import org.koin.plugin.module.dsl.startKoin
 import org.koin.sample.service.UserService
 
 /**
@@ -61,7 +62,7 @@ object KoinUserApplication
  * to demonstrate the dependency injection in action.
  */
 fun main() {
-    KoinUserApplication.startKoin()
+    startKoin<KoinUserApplication>()
 
     val userApplication = KoinPlatform.getKoin().get<UserApplication>()
     userApplication.sayHello("Alice")

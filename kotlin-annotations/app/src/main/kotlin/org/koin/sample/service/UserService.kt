@@ -1,7 +1,6 @@
 package org.koin.sample.service
 
-import jakarta.inject.Singleton
-import org.koin.core.annotation.Single
+import org.koin.core.annotation.Singleton
 import org.koin.sample.data.DEFAULT_USER
 import org.koin.sample.data.DEFAULT_USERS
 import org.koin.sample.data.User

@@ -2,7 +2,6 @@ package org.koin.sample.di
 
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Configuration
-import org.koin.core.annotation.KoinApplication
 import org.koin.core.annotation.Module
 
 /**

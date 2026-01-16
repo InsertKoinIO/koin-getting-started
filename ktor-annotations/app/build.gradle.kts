@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.kotlinJvm)
-    alias(libs.plugins.ksp)
+    alias(libs.plugins.koin.plugin)
     application
 }
 
@@ -9,18 +9,12 @@ dependencies {
     implementation(libs.logback)
     implementation(libs.koin.ktor)
     implementation(libs.koin.annotations)
-    implementation(libs.koin.jsr330)
-    ksp(libs.koin.ksp)
     implementation(libs.koin.ktor.slf4j)
 
     testImplementation(libs.ktor.test)
     testImplementation(libs.koin.test)
     testImplementation(libs.koin.test.junit)
     testImplementation(libs.mockito)
-}
-
-ksp {
-    arg("KOIN_CONFIG_CHECK", "true")
 }
 
 application {

@@ -7,7 +7,7 @@ plugins {
 dependencies {
     // Koin dependencies
     implementation(libs.koin.core)
-    implementation(libs.koin.plugin.support)
+
     // Koin testing
     testImplementation(libs.koin.test)
     testImplementation(libs.koin.test.junit)

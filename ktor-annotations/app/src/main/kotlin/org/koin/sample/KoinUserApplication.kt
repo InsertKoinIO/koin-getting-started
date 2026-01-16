@@ -11,6 +11,7 @@ import org.koin.ksp.generated.koinConfiguration
 import org.koin.ksp.generated.startKoin
 import org.koin.ktor.ext.inject
 import org.koin.ktor.plugin.Koin
+import org.koin.plugin.module.dsl.koinApplication
 import org.koin.sample.service.UserService
 
 /**
@@ -51,7 +52,7 @@ fun Application.main() {
 
     // Configure Koin dependency injection
     install(Koin){
-        includes(KoinUserApplication.koinConfiguration())
+        includes(koinApplication<KoinUserApplication>())
     }
 
     // Inject UserService and initialize with default users
