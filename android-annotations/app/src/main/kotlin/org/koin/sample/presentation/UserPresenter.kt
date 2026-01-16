@@ -1,6 +1,7 @@
 package org.koin.sample.presentation
 
-import org.koin.core.annotation.Factory
+import org.koin.core.annotation.Scoped
+import org.koin.core.annotation.ViewModelScope
 import org.koin.sample.service.UserService
 
 /**
@@ -12,7 +13,7 @@ import org.koin.sample.service.UserService
  *
  * @property userService The service layer for user operations
  */
-@Factory
+@ViewModelScope
 class UserPresenter(
     private val userService: UserService
 )  {

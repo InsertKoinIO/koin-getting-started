@@ -24,6 +24,10 @@ android {
     }
 }
 
+koinCompiler {
+    userLogs = true
+}
+
 dependencies {
     implementation(libs.android.appcompat)
     implementation(libs.koin.android)

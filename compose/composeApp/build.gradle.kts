@@ -89,6 +89,10 @@ android {
     }
 }
 
+koinCompiler {
+    userLogs = true
+}
+
 dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
 }

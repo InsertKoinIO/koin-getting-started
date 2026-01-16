@@ -2,8 +2,8 @@
 
 agp = "8.13.2"
 kotlin = "2.3.20-Beta1"
-koin = "4.2.0-beta3-plugin-rc5"
-koin-plugin = "0.1.38"
+koin = "4.2.0-beta3"
+koin-plugin = "0.2.1"
 android-appcompat = "1.7.1"
 mockito = "5.2.0"
 

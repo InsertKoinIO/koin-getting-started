@@ -23,6 +23,7 @@ import org.koin.dsl.bind
 import org.koin.dsl.includes
 import org.koin.dsl.module
 import org.koin.mp.KoinPlatform
+import org.koin.plugin.module.dsl.create
 import org.koin.plugin.module.dsl.single
 import org.koin.plugin.module.dsl.viewModel
 
@@ -37,19 +38,20 @@ val nativeComponentModule = module {
 }
 
 val dataModule = module {
-    single {
-        val json = Json { ignoreUnknownKeys = true }
-        HttpClient {
-            install(ContentNegotiation) {
-                // TODO Fix API so it serves application/json
-                json(json, contentType = ContentType.Any)
-            }
-        }
-    }
-
+    single { create(::buildClient) }
     single<KtorMuseumApi>() bind MuseumApi::class
     single<InMemoryMuseumStorage>() bind MuseumStorage::class
     single<MuseumRepository>() withOptions { createdAtStart() }
+}
+
+private fun buildClient(): HttpClient {
+    val json = Json { ignoreUnknownKeys = true }
+    return HttpClient {
+        install(ContentNegotiation) {
+            // TODO Fix API so it serves application/json
+            json(json, contentType = ContentType.Any)
+        }
+    }
 }
 
 val viewModelModule = module {
