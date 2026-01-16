@@ -40,18 +40,5 @@ Additional readings about basic setup: https://github.com/InsertKoinIO/koin/blob
 
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/koin#sponsor)]
 
-## Sponsors
-
-<a href="https://getstream.io/chat/sdk/android/?utm_source=koin&utm_medium=sponsorship&utm_content=developer" target="_blank"><img src="https://github.com/InsertKoinIO/koin/blob/master/docs/img/sponsors/stream-logo-2x.png"></a>
-
-<a href="https://opencollective.com/koin#sponsors" target="_blank"><img src="https://opencollective.com/koin/sponsors.svg?width=890"></a>
-
-## Backers
-
-Thank you to all our backers! 🙏
-
-<a href="https://opencollective.com/koin#backers" target="_blank"><img src="https://opencollective.com/koin/backers.svg?width=890"></a>
-
-[[Become a backer](https://opencollective.com/koin#backer)]
 
 
