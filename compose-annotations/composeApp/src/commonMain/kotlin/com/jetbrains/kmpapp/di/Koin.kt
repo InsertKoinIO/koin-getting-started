@@ -28,18 +28,18 @@ class AppModule
 @KoinApplication
 object KoinApp
 
-fun initKoin(configuration : KoinAppDeclaration? = null) {
-    startKoin<KoinApp> {
-        printLogger(Level.DEBUG)
-        includes(configuration)
-    }
-
-    val nativeComponent = KoinPlatform.getKoin().get<NativeComponent>().getInfo()
-    println("-- NativeComponent -- Running on: $nativeComponent")
-
-    val platformInfo = KoinPlatform.getKoin().get<PlatformComponent>().getInfo()
-    println("-- PlatformComponent -- Running on: $platformInfo")
-
-    val platformContext = KoinPlatform.getKoin().get<NativeContextComponent>()
-    println("-- platformContext - Interface Definition -- Running on: ${platformContext.getInfo()}")
-}
+//fun initKoin(configuration : KoinAppDeclaration? = null) {
+//    startKoin<KoinApp> {
+//        printLogger(Level.DEBUG)
+//        includes(configuration)
+//    }
+//
+//    val nativeComponent = KoinPlatform.getKoin().get<NativeComponent>().getInfo()
+//    println("-- NativeComponent -- Running on: $nativeComponent")
+//
+//    val platformInfo = KoinPlatform.getKoin().get<PlatformComponent>().getInfo()
+//    println("-- PlatformComponent -- Running on: $platformInfo")
+//
+//    val platformContext = KoinPlatform.getKoin().get<NativeContextComponent>()
+//    println("-- platformContext - Interface Definition -- Running on: ${platformContext.getInfo()}")
+//}

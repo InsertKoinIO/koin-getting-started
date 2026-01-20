@@ -144,7 +144,7 @@ Finally, we need to create a `@KoinApplication` object and configure our HTTP ro
 object KoinUserApplication
 ```
 
-The `@KoinApplication` annotation marks this as the entry point for Koin's annotation-based configuration. The KSP processor generates a `koinConfiguration()` extension function for this object.
+The `@KoinApplication` annotation marks this as the entry point for Koin's annotation-based configuration. The KSP processor generates configuration that can be used with `withConfiguration<T>()` to initialize Koin.
 
 ## Start and Inject
 
@@ -154,7 +154,8 @@ Now let's configure the Ktor application with Koin:
 fun Application.main() {
     // Install Koin with generated configuration
     install(Koin) {
-        includes(KoinUserApplication.koinConfiguration())
+        slf4jLogger()
+        withConfiguration<KoinUserApplication>()
     }
 
     // Lazy inject UserService
@@ -174,7 +175,7 @@ fun Application.main() {
 ```
 
 **Key Points:**
-* `KoinUserApplication.koinConfiguration()` - Generated function that includes all discovered modules
+* `withConfiguration<KoinUserApplication>()` - Uses the generated Koin configuration from the annotated application object
 * No need to manually call `modules(AppModule().module)` - it's included automatically!
 * The `/hello` endpoint accepts an optional `name` query parameter
 

@@ -1,6 +1,6 @@
 package org.koin.sample.repository
 
-import jakarta.inject.Singleton
+import org.koin.core.annotation.Singleton
 import org.koin.sample.data.User
 
 /**

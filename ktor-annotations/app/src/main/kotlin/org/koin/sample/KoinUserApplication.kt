@@ -6,12 +6,10 @@ import io.ktor.server.netty.Netty
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.koin.core.annotation.KoinApplication
-import org.koin.dsl.includes
-import org.koin.ksp.generated.koinConfiguration
-import org.koin.ksp.generated.startKoin
 import org.koin.ktor.ext.inject
 import org.koin.ktor.plugin.Koin
-import org.koin.plugin.module.dsl.koinApplication
+import org.koin.logger.slf4jLogger
+import org.koin.plugin.module.dsl.withConfiguration
 import org.koin.sample.service.UserService
 
 /**
@@ -52,7 +50,8 @@ fun Application.main() {
 
     // Configure Koin dependency injection
     install(Koin){
-        includes(koinApplication<KoinUserApplication>())
+        slf4jLogger()
+        withConfiguration<KoinUserApplication>()
     }
 
     // Inject UserService and initialize with default users

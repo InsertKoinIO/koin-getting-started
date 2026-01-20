@@ -11,7 +11,7 @@ pluginManagement {
             }
         }
         mavenCentral()
-//        mavenLocal()
+        mavenLocal()
         gradlePluginPortal()
     }
 }
@@ -26,7 +26,7 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
-//        mavenLocal()
+        mavenLocal()
     }
 }
 
