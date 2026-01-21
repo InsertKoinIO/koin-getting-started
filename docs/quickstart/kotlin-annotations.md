@@ -72,7 +72,7 @@ class UserRepositoryImpl : UserRepository {
 ```
 
 :::note
-This project uses **Jakarta annotations** (`@Singleton` from `jakarta.inject`) instead of Koin's `@Single`. Both work with Koin, but Jakarta annotations provide better interoperability with other frameworks.
+This project uses Koin's `@Singleton` annotation (from `org.koin.core.annotation`) to declare singleton components.
 :::
 
 ## The Koin module

@@ -63,7 +63,7 @@ interface UserRepository {
     fun addUsers(users: List<User>)
 }
 
-@Single
+@Singleton
 class UserRepositoryImpl : UserRepository {
 
     private val _users = arrayListOf<User>()
@@ -89,7 +89,7 @@ interface UserService {
     fun prepareHelloMessage(user: User?): String
 }
 
-@Single
+@Singleton
 class UserServiceImpl(
     private val userRepository: UserRepository
 ) : UserService {
@@ -132,18 +132,18 @@ class AppModule
 With component scanning enabled, we simply add annotations to our classes:
 
 ```kotlin
-@Single
+@Singleton
 class UserRepositoryImpl : UserRepository {
     // ...
 }
 
-@Single
+@Singleton
 class UserServiceImpl(private val userRepository: UserRepository) : UserService {
     // ...
 }
 ```
 
-The `@Single` annotation declares these classes as singletons in Koin.
+The `@Singleton` annotation declares these classes as singletons in Koin.
 
 ## Displaying User with Presenter
 
