@@ -1,8 +1,8 @@
 [versions]
-ktor = "3.3.2"
+ktor = "3.4.0"
 kotlin = "2.3.20-Beta1"
-koin = "4.2.0-beta4"
-koin-plugin = "0.2.8"
+koin = "4.2.0-RC1"
+koin-plugin = "0.3.0"
 mockito = "4.8.0"
 
 logback = "1.4.12"

@@ -1,8 +1,9 @@
 [versions]
 
 agp = "8.13.1"
-kotlin = "2.2.21"
-koin = "4.1.1"
+kotlin = "2.3.20-Beta1"
+koin = "4.2.0-RC1"
+koin-plugin = "0.3.0"
 android-appcompat = "1.7.1"
 mockito = "5.2.0"
 compose-bom = "2025.11.01"
@@ -29,3 +30,4 @@ compose-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-com
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "agp" }
+koin = { id = "io.insert-koin.compiler.plugin", version.ref = "koin-plugin" }
