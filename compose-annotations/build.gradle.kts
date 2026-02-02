@@ -1,9 +1,9 @@
 plugins {
-    alias(libs.plugins.androidApplication) apply false
-    alias(libs.plugins.androidLibrary) apply false
-    alias(libs.plugins.composeCompiler) apply false
-    alias(libs.plugins.composeMultiplatform) apply false
-    alias(libs.plugins.kotlinMultiplatform) apply false
-    alias(libs.plugins.kotlinxSerialization) apply false
-    alias(libs.plugins.koinPlugin) apply false
+    alias(sharedLibs.plugins.android.application) apply false
+    alias(sharedLibs.plugins.android.library) apply false
+    alias(sharedLibs.plugins.kotlin.compose) apply false
+    alias(sharedLibs.plugins.compose.multiplatform) apply false
+    alias(sharedLibs.plugins.kotlin.multiplatform) apply false
+    alias(sharedLibs.plugins.kotlin.serialization) apply false
+    alias(sharedLibs.plugins.koin) apply false
 }

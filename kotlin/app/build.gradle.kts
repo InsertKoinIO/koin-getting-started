@@ -1,16 +1,16 @@
 plugins {
-    alias(libs.plugins.kotlinJvm)
-    alias(libs.plugins.koin.plugin)
+    alias(sharedLibs.plugins.kotlin.jvm)
+    alias(sharedLibs.plugins.koin)
     application
 }
 
 dependencies {
     // Koin dependencies
-    implementation(libs.koin.core)
+    implementation(sharedLibs.koin.core)
 
     // Koin testing
-    testImplementation(libs.koin.test)
-    testImplementation(libs.koin.test.junit)
+    testImplementation(sharedLibs.koin.test)
+    testImplementation(sharedLibs.koin.test.junit4)
     testImplementation(libs.mockito)
 }
 

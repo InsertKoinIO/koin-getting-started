@@ -1,21 +1,10 @@
-[versions]
+# Project-specific dependencies
+# Shared versions (kotlin, koin, koin-plugin, agp) are in ../gradle/libs.versions.toml
 
-agp = "8.13.2"
-kotlin = "2.3.20-Beta1"
-koin = "4.2.0-RC1"
-koin-plugin = "0.3.0"
+[versions]
 android-appcompat = "1.7.1"
 mockito = "5.2.0"
 
 [libraries]
-android-appcompat = {module = "androidx.appcompat:appcompat", version.ref = "android-appcompat"}
-koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
-koin-test = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
-koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koin" }
-mockito = {module = "org.mockito:mockito-inline", version.ref = "mockito"}
-
-[plugins]
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-android-application = { id = "com.android.application", version.ref = "agp" }
-android-library = { id = "com.android.library", version.ref = "agp" }
-koin-plugin = { id  = "io.insert-koin.compiler.plugin", version.ref = "koin-plugin" }
+android-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "android-appcompat" }
+mockito = { module = "org.mockito:mockito-inline", version.ref = "mockito" }

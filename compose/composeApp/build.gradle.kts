@@ -2,12 +2,12 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.koin.plugin)
-    alias(libs.plugins.kotlinxSerialization)
+    alias(sharedLibs.plugins.kotlin.multiplatform)
+    alias(sharedLibs.plugins.android.application)
+    alias(sharedLibs.plugins.compose.multiplatform)
+    alias(sharedLibs.plugins.kotlin.compose)
+    alias(sharedLibs.plugins.koin)
+    alias(sharedLibs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -56,8 +56,8 @@ kotlin {
 
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
-            implementation(libs.koin.core)
-            implementation(libs.koin.compose.viewmodel)
+            implementation(sharedLibs.koin.core)
+            implementation(sharedLibs.koin.compose.viewmodel.navigation)
         }
     }
 }

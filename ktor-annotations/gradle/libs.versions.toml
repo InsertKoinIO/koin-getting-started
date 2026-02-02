@@ -1,25 +1,13 @@
+# Project-specific dependencies
+# Shared versions (kotlin, koin, koin-plugin) are in ../gradle/libs.versions.toml
+
 [versions]
 ktor = "3.4.0"
-kotlin = "2.3.20-Beta1"
-koin = "4.2.0-RC1"
-koin-plugin = "0.3.0"
-
+logback = "1.4.12"
 mockito = "4.8.0"
 
-logback = "1.4.12"
-
 [libraries]
-ktor-server = {module = "io.ktor:ktor-server-netty", version.ref = "ktor"}
-ktor-test = {module = "io.ktor:ktor-server-test-host", version.ref = "ktor"}
-logback = {module = "ch.qos.logback:logback-classic", version.ref = "logback"}
-koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin" }
-koin-ktor-slf4j = { module = "io.insert-koin:koin-logger-slf4j", version.ref = "koin" }
-koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
-koin-test-junit = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
-koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koin" }
-
-mockito = {module = "org.mockito:mockito-inline", version.ref = "mockito"}
-
-[plugins]
-kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-koin-plugin = { id  = "io.insert-koin.compiler.plugin", version.ref = "koin-plugin" }
+ktor-server = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
+ktor-test = { module = "io.ktor:ktor-server-test-host", version.ref = "ktor" }
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+mockito = { module = "org.mockito:mockito-inline", version.ref = "mockito" }

@@ -1,9 +1,7 @@
-[versions]
+# Project-specific dependencies
+# Shared versions (kotlin, koin, koin-plugin, agp) are in ../gradle/libs.versions.toml
 
-agp = "8.13.1"
-kotlin = "2.3.20-Beta1"
-koin = "4.2.0-RC1"
-koin-plugin = "0.3.0"
+[versions]
 android-appcompat = "1.7.1"
 mockito = "5.2.0"
 compose-bom = "2025.11.01"
@@ -11,12 +9,8 @@ compose-activity = "1.12.0"
 compose-lifecycle = "2.10.0"
 
 [libraries]
-android-appcompat = {module = "androidx.appcompat:appcompat", version.ref = "android-appcompat"}
-koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
-koin-android-test = { module = "io.insert-koin:koin-android-test", version.ref = "koin" }
-koin-test = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
-koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
-mockito = {module = "org.mockito:mockito-inline", version.ref = "mockito"}
+android-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "android-appcompat" }
+mockito = { module = "org.mockito:mockito-inline", version.ref = "mockito" }
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
 compose-ui = { module = "androidx.compose.ui:ui" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
@@ -25,9 +19,3 @@ compose-material3 = { module = "androidx.compose.material3:material3" }
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "compose-activity" }
 compose-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "compose-lifecycle" }
 compose-lifecycle-runtime = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "compose-lifecycle" }
-
-[plugins]
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-android-application = { id = "com.android.application", version.ref = "agp" }
-koin = { id = "io.insert-koin.compiler.plugin", version.ref = "koin-plugin" }

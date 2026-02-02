@@ -1,8 +1,8 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
-    alias(libs.plugins.koin)
+    alias(sharedLibs.plugins.android.application)
+    alias(sharedLibs.plugins.kotlin.android)
+    alias(sharedLibs.plugins.kotlin.compose)
+    alias(sharedLibs.plugins.koin)
 }
 
 android {
@@ -33,8 +33,8 @@ android {
 
 dependencies {
     implementation(libs.android.appcompat)
-    implementation(libs.koin.android)
-    implementation(libs.koin.androidx.compose)
+    implementation(sharedLibs.koin.android)
+    implementation(sharedLibs.koin.androidx.compose)
 
     // Compose BOM
     implementation(platform(libs.compose.bom))
@@ -48,7 +48,7 @@ dependencies {
     // Debug
     debugImplementation(libs.compose.ui.tooling)
 
-    testImplementation(libs.koin.test)
-    testImplementation(libs.koin.android.test)
+    testImplementation(sharedLibs.koin.test.junit4)
+    testImplementation(sharedLibs.koin.android.test)
     testImplementation(libs.mockito)
 }

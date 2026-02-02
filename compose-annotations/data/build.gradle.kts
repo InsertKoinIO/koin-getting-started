@@ -2,10 +2,10 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
-    alias(libs.plugins.kotlinMultiplatform)
-    alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.koinPlugin)
-    alias(libs.plugins.kotlinxSerialization)
+    alias(sharedLibs.plugins.kotlin.multiplatform)
+    alias(sharedLibs.plugins.android.library)
+    alias(sharedLibs.plugins.koin)
+    alias(sharedLibs.plugins.kotlin.serialization)
 }
 
 kotlin {
@@ -35,8 +35,8 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
-            implementation(libs.koin.core)
-            api(libs.koin.annotations)
+            implementation(sharedLibs.koin.core)
+            api(sharedLibs.koin.annotations)
         }
     }
 }

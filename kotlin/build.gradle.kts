@@ -1,3 +1,3 @@
 plugins {
-    alias(libs.plugins.kotlinJvm).apply(false)
+    alias(sharedLibs.plugins.kotlin.jvm).apply(false)
 }

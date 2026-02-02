@@ -1,16 +1,8 @@
+# Project-specific dependencies
+# Shared versions (kotlin, koin, koin-plugin) are in ../gradle/libs.versions.toml
+
 [versions]
-kotlin = "2.3.20-Beta1"
-koin = "4.2.0-RC1"
-koin-plugin = "0.3.0"
 mockito = "4.8.0"
 
 [libraries]
-koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
-koin-annotations = {module = "io.insert-koin:koin-annotations", version.ref = "koin"}
-koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
-koin-test-junit = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
-mockito = {module = "org.mockito:mockito-inline", version.ref = "mockito"}
-
-[plugins]
-kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-koin-plugin = { id  = "io.insert-koin.compiler.plugin", version.ref = "koin-plugin" }
+mockito = { module = "org.mockito:mockito-inline", version.ref = "mockito" }

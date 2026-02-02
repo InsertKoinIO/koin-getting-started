@@ -1,7 +1,7 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.koin.plugin)
+    alias(sharedLibs.plugins.android.application)
+    alias(sharedLibs.plugins.kotlin.android)
+    alias(sharedLibs.plugins.koin)
 }
 
 android {
@@ -30,9 +30,9 @@ koinCompiler {
 
 dependencies {
     implementation(libs.android.appcompat)
-    implementation(libs.koin.android)
-    implementation(libs.koin.annotations)
+    implementation(sharedLibs.koin.android)
+    implementation(sharedLibs.koin.annotations)
 
     testImplementation(libs.mockito)
-    testImplementation(libs.koin.test)
+    testImplementation(sharedLibs.koin.test.junit4)
 }
