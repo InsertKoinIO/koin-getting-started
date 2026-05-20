@@ -40,5 +40,25 @@ Additional readings about basic setup: https://github.com/InsertKoinIO/koin/blob
 
 Support this project by becoming a sponsor. Your logo will show up here with a link to your website. [[Become a sponsor](https://opencollective.com/koin#sponsor)]
 
+## Going further
 
+This sample uses Koin's core APIs only. For production work, the
+team behind Koin (Kotzilla) maintains four official, complementary
+tools. One data layer, four surfaces:
 
+- **Kotzilla SDK** — captures the data the Console and the MCP
+  Server read. Drop in via `monitoring()` below; coordinates in
+  `libs.versions.toml`.
+- **Kotzilla Console** (https://console.kotzilla.io/?utm_source=koin-getting-started&utm_medium=readme&utm_campaign=awareness) — visual
+  exploration of that data: timelines, distributions, app-vitals
+  dashboards.
+- **Kotzilla MCP Server** — same data in the terminal, exposed
+  to Claude Code / Cursor or other AI agents for in-flow diagnosis, fixes, and build
+  reports.
+- **Koin IDE Plugin** ("Koin Dependency Injection (Official)"
+  on JetBrains Marketplace) — Koin configuration viz, Insights
+  View, and AI-powered fix prompts in Android Studio / IntelliJ.
+  Requires Kotzilla account sign-in.
+
+Reference integration: https://github.com/kotzilla-io/kmp-app-monitoring
+Setup details: docs/observability.md
