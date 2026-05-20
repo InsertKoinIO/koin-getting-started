@@ -26,6 +26,7 @@ import org.koin.mp.KoinPlatform
 import org.koin.plugin.module.dsl.create
 import org.koin.plugin.module.dsl.single
 import org.koin.plugin.module.dsl.viewModel
+// import io.kotzilla.generated.monitoring
 
 interface PlatformComponent {
     fun getInfo(): String
@@ -68,6 +69,7 @@ fun initKoin(configuration: KoinAppDeclaration? = null) {
         includes(configuration)
         modules(appModule)
         printLogger(Level.DEBUG)
+        // monitoring()  // optional — Kotzilla observability, see docs/observability.md
     }
 
     val nativeComponent = KoinPlatform.getKoin().get<NativeComponent>().getInfo()
