@@ -44,11 +44,17 @@ Android.
 The SDK reads its API key and config from `kotzilla.json`. Generate
 yours from the Console (see the Kotzilla docs for the exact steps).
 
-## 4. Open the Console
+## 4. Explore your data
 
-Once a session is captured, sign in at https://console.kotzilla.io
-to view crash sessions, performance timelines, and the dependency
-graph for this sample.
+Once a session is captured, two surfaces read the same backend:
+
+- **Kotzilla Console** (https://console.kotzilla.io) — visual exploration:
+  timelines, dependency graphs, app vitals dashboards. The right surface
+  when you want to share or explore visually.
+- **Kotzilla MCP Server** — same data in the terminal, exposed to your AI
+  assistant (Claude Code, Cursor, Windsurf). Diagnose and fix bugs in-flow,
+  generate build reports, diff across versions — without leaving your editor.
+  Setup: [doc.kotzilla.io/docs/getstartedCustom/mcpSetup](https://doc.kotzilla.io/docs/getstartedCustom/mcpSetup)
 
 ## 5. (Optional) Install the Koin IDE Plugin
 
@@ -63,13 +69,6 @@ any detected issue, the plugin can generate an AI-powered
 prompt with full context (impacted components, dependency
 chains, performance insights) — ready to send to Claude Code,
 Junie, Copilot, or Gemini.
-
-## 6. (Optional) Connect an AI assistant
-
-The Kotzilla MCP Server gives Claude Code, Cursor, Windsurf, and other
-AI coding assistants authenticated access to the same data the Console
-exposes — diagnose and fix bugs from the terminal, generate build reports
-on demand. Setup: [doc.kotzilla.io/docs/getstartedCustom/mcpSetup](https://doc.kotzilla.io/docs/getstartedCustom/mcpSetup)
 
 ## MCP vs. Console — when to use which
 
