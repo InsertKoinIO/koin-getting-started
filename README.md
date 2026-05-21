@@ -53,8 +53,8 @@ tools. One data layer, four surfaces:
   exploration of that data: timelines, distributions, app-vitals
   dashboards.
 - **Kotzilla MCP Server** — same data in the terminal, exposed
-  to Claude Code / Cursor or other AI agents for in-flow diagnosis, fixes, and build
-  reports.
+  to Claude Code / Cursor or other AI agents for SDK setup
+  guidance, in-flow diagnosis, fixes, and build reports.
 - **Koin IDE Plugin** ("Koin Dependency Injection (Official)"
   on JetBrains Marketplace) — Koin configuration viz, Insights
   View, and AI-powered fix prompts in Android Studio / IntelliJ.
