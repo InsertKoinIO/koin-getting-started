@@ -11,7 +11,8 @@ The architecture is simple — one data layer, four surfaces:
 - The **Console** (https://console.kotzilla.io/?utm_source=koin-getting-started&utm_medium=observability-md&utm_campaign=awareness) is the web client
   for that backend: sessions, dependency graphs, app vitals.
 - The **MCP Server** is another client of the same backend, for
-  AI assistants in the terminal.
+  AI assistants in the terminal — setup guidance, diagnosis,
+  build reports, and version diffs without leaving the editor.
 - The **Koin IDE Plugin** ("Koin Dependency Injection
   (Official)" on JetBrains Marketplace) is the official Koin
   plugin maintained by the Koin team. It does Koin runtime
@@ -52,8 +53,9 @@ Once a session is captured, two surfaces read the same backend:
   timelines, dependency graphs, app vitals dashboards. The right surface
   when you want to share or explore visually.
 - **Kotzilla MCP Server** — same data in the terminal, exposed to your AI
-  assistant (Claude Code, Cursor, Windsurf). Diagnose and fix bugs in-flow,
-  generate build reports, diff across versions — without leaving your editor.
+  assistant (Claude Code, Cursor, Windsurf). Guide SDK setup, diagnose and
+  fix bugs in-flow, generate build reports, diff across versions — without
+  leaving your editor.
   Setup: [doc.kotzilla.io/docs/getstartedCustom/mcpSetup](https://doc.kotzilla.io/docs/getstartedCustom/mcpSetup)
 
 ## 5. (Optional) Install the Koin IDE Plugin
@@ -74,8 +76,9 @@ Junie, Copilot, or Gemini.
 
 The MCP and the Console are peer clients of the same backend, so
 they can answer most of the same questions. Use the **MCP** when
-you're already in your editor and want a text answer in-flow ("show
-me what regressed since v39.0.4", "drill into ConferenceService").
-Use the **Console** when you want visual context (timelines,
-distributions, dependency graphs as graphs) or when you want to
-share something with a teammate via a URL.
+you're setting up the SDK, already in your editor and want a text
+answer in-flow ("show me what regressed since v39.0.4", "drill into
+ConferenceService"), or want to stay in the terminal from setup to
+diagnosis. Use the **Console** when you want visual context
+(timelines, distributions, dependency graphs as graphs) or when you
+want to share something with a teammate via a URL.
