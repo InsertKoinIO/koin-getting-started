@@ -11,6 +11,7 @@ import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
 import org.koin.plugin.module.dsl.withConfiguration
 import org.koin.sample.service.UserService
+// import io.kotzilla.generated.monitoring
 
 /**
  * Koin application configuration object.
@@ -52,6 +53,7 @@ fun Application.main() {
     install(Koin){
         slf4jLogger()
         withConfiguration<KoinUserApplication>()
+        // monitoring()  // optional — Kotzilla observability, see docs/observability.md
     }
 
     // Inject UserService and initialize with default users

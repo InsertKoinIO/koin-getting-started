@@ -10,6 +10,7 @@ import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
 import org.koin.sample.di.appModule
 import org.koin.sample.service.UserService
+// import io.kotzilla.generated.monitoring
 
 /**
  * Application entry point that starts the Ktor server.
@@ -38,6 +39,7 @@ fun Application.main() {
     // Configure Koin dependency injection
     install(Koin) {
         modules(appModule)
+        // monitoring()  // optional — Kotzilla observability, see docs/observability.md
     }
 
     // Inject UserService and initialize with default users
