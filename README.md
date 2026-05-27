@@ -49,7 +49,7 @@ tools. One data layer, four surfaces:
 - **Kotzilla SDK** — captures the data the Console and the MCP
   Server read. Drop in via `monitoring()` below; coordinates in
   `libs.versions.toml`.
-- **Kotzilla Console** (https://console.kotzilla.io/?utm_source=koin-getting-started&utm_medium=readme&utm_campaign=awareness) — visual
+- **[Kotzilla Console](https://console.kotzilla.io/?utm_source=koin-getting-started&utm_medium=readme&utm_campaign=awareness)** — visual
   exploration of that data: timelines, distributions, app-vitals
   dashboards.
 - **Kotzilla MCP Server** — same data in the terminal, exposed

@@ -8,7 +8,7 @@ The architecture is simple — one data layer, four surfaces:
 - The **SDK** runs in the app and captures crashes, ANRs, slow
   startups, and Koin events. It sends sessions to the Kotzilla
   backend.
-- The **Console** (https://console.kotzilla.io/?utm_source=koin-getting-started&utm_medium=observability-md&utm_campaign=awareness) is the web client
+- The **[Console](https://console.kotzilla.io/?utm_source=koin-getting-started&utm_medium=observability-md&utm_campaign=awareness)** is the web client
   for that backend: sessions, dependency graphs, app vitals.
 - The **MCP Server** is another client of the same backend, for
   AI assistants in the terminal — setup guidance, diagnosis,
@@ -49,7 +49,7 @@ yours from the Console (see the Kotzilla docs for the exact steps).
 
 Once a session is captured, two surfaces read the same backend:
 
-- **Kotzilla Console** (https://console.kotzilla.io/?utm_source=koin-getting-started&utm_medium=observability-md&utm_campaign=awareness) — visual exploration:
+- **[Kotzilla Console](https://console.kotzilla.io/?utm_source=koin-getting-started&utm_medium=observability-md&utm_campaign=awareness)** — visual exploration:
   timelines, dependency graphs, app vitals dashboards. The right surface
   when you want to share or explore visually.
 - **Kotzilla MCP Server** — same data in the terminal, exposed to your AI
