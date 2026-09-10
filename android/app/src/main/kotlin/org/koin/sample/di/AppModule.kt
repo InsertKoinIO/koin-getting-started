@@ -1,5 +1,7 @@
 package org.koin.sample.di
 
+import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import org.koin.plugin.module.dsl.factory
@@ -27,8 +29,8 @@ import org.koin.sample.service.UserServiceImpl
  * - factoryOf: Creates a new instance each time it's requested
  */
 val appModule = module {
+    viewModel { UserViewModel(get()) }
+    factoryOf(::UserPresenter)
+    single { UserServiceImpl(get()) } bind UserService::class
     single<UserRepositoryImpl>() bind UserRepository::class
-    single<UserServiceImpl>() bind UserService::class
-    viewModel<UserViewModel>()
-    factory<UserPresenter>()
 }

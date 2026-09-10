@@ -19,6 +19,6 @@ import org.koin.sample.service.UserServiceImpl
  * throughout the application lifecycle.
  */
 val appModule = module {
+    single { UserServiceImpl(get()) } bind UserService::class
     single<UserRepositoryImpl>() bind UserRepository::class
-    single<UserServiceImpl>() bind UserService::class
 }
