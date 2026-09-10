@@ -6,6 +6,7 @@ import org.koin.core.context.startKoin
 import org.koin.mp.KoinPlatform
 import org.koin.plugin.module.dsl.startKoin
 import org.koin.sample.service.UserService
+// import io.kotzilla.generated.monitoring
 
 /**
  * Main application class that demonstrates Koin dependency injection.
@@ -62,7 +63,9 @@ object KoinUserApplication
  * to demonstrate the dependency injection in action.
  */
 fun main() {
-    startKoin<KoinUserApplication>()
+    startKoin<KoinUserApplication> {
+        // monitoring()  // optional — Kotzilla observability, see docs/observability.md
+    }
 
     val userApplication = KoinPlatform.getKoin().get<UserApplication>()
     userApplication.sayHello("Alice")

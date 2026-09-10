@@ -3,6 +3,7 @@ package org.koin.sample
 import android.app.Application
 import org.koin.core.context.startKoin
 import org.koin.sample.di.appModule
+// import io.kotzilla.generated.monitoring
 
 class MainApplication : Application() {
 
@@ -12,6 +13,7 @@ class MainApplication : Application() {
 
         startKoin {
             modules(appModule)
+            // monitoring()  // optional — Kotzilla observability, see docs/observability.md
         }
     }
 }

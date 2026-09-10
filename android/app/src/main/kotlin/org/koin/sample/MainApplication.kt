@@ -6,6 +6,7 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import org.koin.sample.di.appModule
+// import io.kotzilla.generated.monitoring
 
 /**
  * Application class that initializes Koin dependency injection framework.
@@ -32,6 +33,7 @@ class MainApplication : Application() {
             androidLogger(Level.DEBUG)
             androidContext(this@MainApplication)
             modules(appModule)
+            // monitoring()  // optional — Kotzilla observability, see docs/observability.md
         }
     }
 }

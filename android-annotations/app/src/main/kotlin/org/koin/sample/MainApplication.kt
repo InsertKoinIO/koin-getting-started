@@ -8,6 +8,7 @@ import org.koin.core.annotation.KoinViewModelScopeApi
 import org.koin.core.logger.Level
 import org.koin.core.option.viewModelScopeFactory
 import org.koin.plugin.module.dsl.startKoin
+// import io.kotzilla.generated.monitoring
 
 /**
  * Main Application class for the Koin Annotations sample app.
@@ -33,6 +34,7 @@ class MainApplication : Application() {
             androidContext(this@MainApplication)
             androidLogger(level = Level.DEBUG)
             options(viewModelScopeFactory())
+            // monitoring()  // optional — Kotzilla observability, see docs/observability.md
         }
     }
 }

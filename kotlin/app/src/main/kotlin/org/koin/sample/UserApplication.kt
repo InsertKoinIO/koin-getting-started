@@ -4,6 +4,7 @@ import org.koin.core.context.startKoin
 import org.koin.mp.KoinPlatform
 import org.koin.sample.di.appModule
 import org.koin.sample.service.UserService
+// import io.kotzilla.generated.monitoring
 
 /**
  * Main application class that demonstrates Koin dependency injection.
@@ -50,6 +51,7 @@ class UserApplication(
 fun main() {
     startKoin {
         modules(appModule)
+        // monitoring()  // optional — Kotzilla observability, see docs/observability.md
     }
 
     val userApplication = KoinPlatform.getKoin().get<UserApplication>()
