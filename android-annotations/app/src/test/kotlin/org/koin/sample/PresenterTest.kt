@@ -2,10 +2,11 @@ package org.koin.sample
 
 import org.junit.Rule
 import org.junit.Test
-import org.koin.dsl.includes
-import org.koin.ksp.generated.koinConfiguration
+import org.koin.plugin.module.dsl.withConfiguration
 import org.koin.sample.data.User
+import org.koin.core.qualifier.TypeQualifier
 import org.koin.sample.presentation.UserPresenter
+import org.koin.sample.presentation.UserViewModel
 import org.koin.sample.repository.UserRepository
 import org.koin.test.KoinTest
 import org.koin.test.KoinTestRule
@@ -15,6 +16,7 @@ import org.mockito.ArgumentMatchers.anyString
 import org.mockito.BDDMockito.given
 import org.mockito.Mockito
 import org.mockito.Mockito.times
+import org.koin.viewmodel.scope.ViewModelScopeArchetype
 import kotlin.jvm.java
 
 /**
@@ -33,7 +35,7 @@ class PresenterTest : KoinTest {
      */
     @get:Rule
     val koinTestRule = KoinTestRule.create {
-        includes(MainApplication().koinConfiguration())
+        withConfiguration<MainApplication>()
     }
 
     /**
@@ -60,7 +62,9 @@ class PresenterTest : KoinTest {
             given(findUserOrNull(anyString())).willReturn(User("Mock","mock@example.com"))
         }
 
-        getKoin().get<UserPresenter>().sayHello("Mock")
+        // UserPresenter is @ViewModelScope: resolve it from a ViewModel-archetype scope
+        val viewModelScope = getKoin().createScope("test", TypeQualifier(UserViewModel::class), null, ViewModelScopeArchetype)
+        viewModelScope.get<UserPresenter>().sayHello("Mock")
         Mockito.verify(service,times(1)).findUserOrNull(anyString())
     }
 }

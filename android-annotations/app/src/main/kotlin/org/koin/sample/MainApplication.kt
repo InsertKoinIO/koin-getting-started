@@ -15,12 +15,12 @@ import org.koin.plugin.module.dsl.startKoin
  *
  * This class uses [@KoinApplication] annotation which automatically:
  * - Discovers all modules annotated with [@Module] and [@Configuration]
- * - Generates the necessary Koin configuration at compile-time via KSP
+ * - Assembles and validates the Koin configuration at compile time via the Koin Compiler Plugin
  * - Loads all modules without requiring manual `modules()` declaration
  *
  * The [startKoin] block only needs to configure Android-specific settings
  * like [androidContext]. All module loading is handled automatically by the
- * [@KoinApplication] annotation processor.
+ * Koin Compiler Plugin.
  */
 @OptIn(KoinViewModelScopeApi::class)
 @KoinApplication

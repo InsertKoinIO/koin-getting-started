@@ -17,9 +17,8 @@ import org.koin.sample.service.UserService
  * Koin application configuration object.
  *
  * This object is annotated with [@KoinApplication] to mark it as the entry point
- * for Koin's annotation-based configuration. The Koin KSP (Kotlin Symbol Processing)
- * processor generates a [startKoin] extension function for this object, which
- * initializes the Koin dependency injection container with all discovered components.
+ * for Koin's annotation-based configuration. The Koin Compiler Plugin assembles all
+ * discovered modules at compile time, and `withConfiguration<KoinUserApplication>()` loads them.
  */
 @KoinApplication
 object KoinUserApplication
