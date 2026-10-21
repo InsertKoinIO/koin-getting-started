@@ -1,3 +1,54 @@
+# Koin Getting Started — agent instructions
+
+Official sample projects for the Koin tutorials at
+https://insert-koin.io/docs/quickstart/kotlin and the pages after it. Each folder is a standalone
+Gradle project, one per platform and style:
+
+| Folder | Style | Tutorial |
+|---|---|---|
+| `kotlin` | Koin DSL | https://insert-koin.io/docs/quickstart/kotlin |
+| `kotlin-annotations` | Koin Annotations | https://insert-koin.io/docs/quickstart/kotlin-annotations |
+| `android` | Koin DSL | https://insert-koin.io/docs/quickstart/android |
+| `android-compose` | Koin DSL | https://insert-koin.io/docs/quickstart/android-compose |
+| `android-annotations` | Koin Annotations | https://insert-koin.io/docs/quickstart/android-annotations |
+| `compose` (Compose Multiplatform) | Koin DSL | https://insert-koin.io/docs/quickstart/cmp |
+| `compose-annotations` (Compose Multiplatform) | Koin Annotations | https://insert-koin.io/docs/quickstart/compose-multiplatform-annotations |
+| `ktor` | Koin DSL | https://insert-koin.io/docs/quickstart/ktor |
+| `ktor-annotations` | Koin Annotations | https://insert-koin.io/docs/quickstart/ktor-annotations |
+
+Build and test a sample from its own folder (`./gradlew build`). Keep the
+code in step with its tutorial page: a change in one needs the other.
+
+## Koin in these samples
+
+- **Two styles, one container** — every sample uses one style, never both:
+  - **Koin DSL** keeps DI out of the code: classes carry no annotations,
+    wiring lives in `module { }`. Three forms:
+    - **Compiler Plugin DSL** `single<T>()` / `single { create(::buildT) }` — the default here.
+    - **Constructor DSL** `singleOf(::T)` — also works without the Compiler Plugin.
+    - **Classic DSL** `single { T(get()) }` — custom expressions only.
+  - **Koin Annotations** `@Singleton`, `@Factory`, `@KoinViewModel`,
+    `@Module` — JSR-330 compatible. Prefer `@Singleton` over `@Single`.
+- **Koin Compiler Plugin** (`id("io.insert-koin.compiler.plugin")`) compiles
+  and checks the whole graph at build time in both styles. No KSP, no kapt:
+  never add `koin-ksp-compiler` or import `org.koin.ksp.generated.*`.
+- **Versions** live in each sample's `gradle/libs.versions.toml`: Koin 4.2.2, Compiler
+  Plugin 1.2.1, Kotlin 2.3.20 or later. Check the latest release on Maven
+  Central before bumping (`koin-bom` and `koin-compiler-gradle-plugin`
+  `maven-metadata.xml`).
+- Compiler Plugin DSL primitives and `startKoin<App>` import from
+  `org.koin.plugin.module.dsl`.
+
+## AI tooling
+
+- **Koin skills** — https://github.com/InsertKoinIO/koin-skills: set up Koin,
+  write Koin code, migrate from Hilt / Dagger / Koin KSP / Koin 3.x, diagnose
+  Koin apps. Claude Code: `/plugin marketplace add InsertKoinIO/koin-skills`
+  then `/plugin install koin@koin-skills`.
+- **Kotzilla MCP** — `https://mcp.kotzilla.io/mcp`: Koin knowledge, Koin
+  error diagnosis and runtime debugging (graph behavior, scopes, memory,
+  performance). See the Kotzilla section below.
+
 <!-- Keep this file in sync with CLAUDE.md / AGENTS.md across
      InsertKoinIO/koin and InsertKoinIO/koin-getting-started.
      The body below is identical across all four files; update
